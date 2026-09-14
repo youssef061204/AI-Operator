@@ -1,0 +1,6 @@
+{
+  "objective": "Read README.md and list the top-level project files. Explain the supported runtime and its boundaries in your final summary. Do not modify files or run commands.",
+  "verification": [{"kind":"file_contains","path":"README.md","text":"AI Operator"}],
+  "policy": {"write_file":"deny","patch_file":"deny","shell":"deny","restore":"deny"},
+  "limits": {"maxSteps":8,"timeoutMs":180000,"maxErrors":3}
+}

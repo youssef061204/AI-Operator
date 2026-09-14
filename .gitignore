@@ -1,0 +1,47 @@
+﻿node_modules/
+.pnpm-store/
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Build outputs
+dist/
+out/
+.next/
+coverage/
+
+# Generated project outputs
+generated/
+
+# Local agent data
+.agent-data/
+packages/agent/data/
+
+# Desktop artifacts
+apps/desktop/release/
+apps/desktop/dist/
+
+# Logs
+*.log
+
+# Env files
+.env
+.env.*
+!.env.example
+
+# Local profiles, secrets and reproducible build caches
+**/data/
+*.tsbuildinfo
+artifacts/baseline/source-backup.zip
+artifacts/baseline/source-baseline.zip
+artifacts/baseline/
+artifacts/verification/*
+!artifacts/verification/build.json
+!artifacts/verification/tests.json
+!artifacts/verification/lint.json
+!artifacts/verification/format.json
+!artifacts/verification/dependency-audit-all.json
+.operator/
+.next-e2e/

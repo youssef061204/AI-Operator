@@ -1,0 +1,38 @@
+name: Verify local operator
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  verify:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.6.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.13.0
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter @operator-assist/shared build
+      - run: pnpm lint
+      - run: pnpm format:check
+      - run: pnpm test
+      - run: pnpm evaluate
+      - run: pnpm --filter @operator-assist/agent build
+      - run: pnpm --filter @operator-assist/web build
+      - run: pnpm --filter @operator-assist/desktop build:ts
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm test:browser
+      - run: pnpm audit --prod
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: evidence-${{ matrix.os }}
+          path: |
+            artifacts/evaluation/*.json
+            artifacts/verification/browser.json

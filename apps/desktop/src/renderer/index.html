@@ -1,0 +1,151 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Operator Assist Desktop</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body class="minimal-runtime">
+    <div class="shell">
+      <aside class="sidebar panel advanced">
+        <h2>Projects / Runs</h2>
+        <ul id="runsList" class="runs-list"></ul>
+      </aside>
+
+      <main class="main">
+        <section class="panel controls">
+          <div class="row">
+            <h1>Operator Assist Local Agent</h1>
+            <button id="killButton" class="danger">KILL SWITCH</button>
+          </div>
+          <div class="row wrap advanced">
+            <button id="startAgentBtn">Start Managed Agent</button>
+            <button id="stopAgentBtn">Stop Managed Agent</button>
+            <button id="authBootstrapBtn">Connect Accounts</button>
+            <span id="healthChip" class="chip">health: unknown</span>
+          </div>
+          <div class="settings-grid advanced">
+            <label><input id="approvalMode" type="checkbox" /> Approval Mode</label>
+            <label><input id="desktopPopups" type="checkbox" /> Desktop Popups</label>
+            <label>
+              Browser Automation
+              <select id="browserMode">
+                <option value="browser">Open in Browser</option>
+              </select>
+            </label>
+            <label>
+              Provider
+              <select id="providerSelect">
+                <option value="vercel">Vercel</option>
+                <option value="netlify">Netlify</option>
+              </select>
+            </label>
+            <label>
+              Workspace Root
+              <input id="workspaceRoot" type="text" placeholder="C:\\OperatorBusinesses" />
+            </label>
+            <button id="saveSettingsBtn">Save Settings</button>
+          </div>
+          <div class="row wrap mode-row advanced">
+            <label>
+              Control Mode
+              <select id="controlModeSelect">
+                <option value="operator">Operator mode</option>
+                <option value="assistive">Assistive mode</option>
+              </select>
+            </label>
+            <label><input id="dryRunToggle" type="checkbox" /> Dry Run (Sandbox)</label>
+            <label><input id="voiceModeToggle" type="checkbox" /> Voice Mode</label>
+            <label><input id="focusModeToggle" type="checkbox" /> Focus / Night Mode</label>
+            <button id="pauseBtn">Pause</button>
+            <button id="resumeBtn">Resume</button>
+          </div>
+          <div class="pairing-row advanced">
+            <input id="pairingCodeInput" placeholder="Pairing code (auto-filled)" />
+            <input id="deviceNameInput" placeholder="Device name" />
+            <button id="registerDeviceBtn">Register Device (Manual)</button>
+            <span id="pairStatus"></span>
+          </div>
+
+          <div class="agent-presence">
+            <div class="agent-avatar-wrap" aria-hidden="true">
+              <div class="agent-ring"></div>
+              <div class="agent-avatar">AI</div>
+            </div>
+            <div class="agent-stream">
+              <p class="agent-title">Architect Agent</p>
+              <p id="agentStatusLine" class="muted">Standing by...</p>
+              <p id="agentTypingLine" class="agent-typing">Waiting for next instruction.</p>
+            </div>
+          </div>
+
+          <div class="assistant-chat panel">
+            <div class="row">
+              <h3>Conversation</h3>
+              <div class="row wrap quick-row">
+                <button id="choiceStartBusinessBtn">Start a business</button>
+                <button id="choiceGrowBusinessBtn">Grow existing business</button>
+                <button id="choiceExploreBtn">Just explore</button>
+              </div>
+            </div>
+            <div class="lead-mode advanced">
+              <label class="lead-csv">Lead CSV <input id="leadCsvInput" type="file" accept=".csv,text/csv" /></label>
+              <textarea id="leadListInput" placeholder="Or paste websites/emails (one per line) for Lead Mode"></textarea>
+              <button id="runLeadModeBtn">Run Lead Mode</button>
+            </div>
+            <ul id="intentStream" class="timeline-list"></ul>
+            <div id="chatMessages" class="chat-messages"></div>
+            <div class="chat-input-row">
+              <input id="chatInput" placeholder="Type a command... (Pause, Resume, What are you doing?, Undo that...)" />
+              <button id="sendChatBtn">Send</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel queue-panel advanced">
+          <div class="row">
+            <h2>Action Queue</h2>
+            <button id="refreshQueueBtn">Refresh</button>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Run</th>
+                <th>Action</th>
+                <th>State</th>
+                <th>Risk</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="queueBody"></tbody>
+          </table>
+        </section>
+
+        <section class="panel logs-panel advanced">
+          <div class="row"><h2>Live Logs</h2></div>
+          <ul id="timelineList" class="timeline-list"></ul>
+          <pre id="logsOutput"></pre>
+        </section>
+      </main>
+    </div>
+
+    <div id="approvalModal" class="approval-modal hidden" aria-hidden="true">
+      <div class="approval-card panel">
+        <p class="chip">Permission Required</p>
+        <h3 id="approvalTitle">Action approval requested</h3>
+        <p id="approvalMeta" class="muted"></p>
+        <pre id="approvalInputs" class="approval-inputs"></pre>
+        <div class="row wrap">
+          <button id="modalApproveBtn">Allow Once</button>
+          <button id="modalAllowSessionBtn">Allow for Session</button>
+          <button id="modalAllowAlwaysBtn">Always Allow</button>
+          <button id="modalRejectBtn" class="danger">Deny</button>
+          <button id="modalLaterBtn">Later</button>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="./renderer.js"></script>
+  </body>
+</html>

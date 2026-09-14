@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Operator Avatar Overlay</title>
+    <link rel="stylesheet" href="./overlay.css" />
+  </head>
+  <body>
+    <div id="dock" class="dock size-expanded">
+      <button id="avatarButton" class="avatar state-idle" title="Toggle avatar size">
+        <span id="avatarCore" class="avatar-core">AI</span>
+        <span id="avatarPulse" class="avatar-pulse"></span>
+      </button>
+
+      <aside id="chatPanel" class="chat-panel" aria-label="Agent Chat Panel">
+        <div class="panel-top">
+          <span id="modeBadge" class="badge">Autonomous</span>
+          <div class="panel-actions">
+            <button id="resumeButton" class="ghost hidden">Resume</button>
+            <button id="sizeButton" class="ghost">Orb</button>
+          </div>
+        </div>
+
+        <p id="avatarText" class="avatar-text">Standing by</p>
+        <p id="intentLine" class="intent-line">Monitoring system context</p>
+
+        <div id="chatFeed" class="chat-feed" aria-live="polite"></div>
+
+        <form id="chatForm" class="chat-form">
+          <input id="chatInput" type="text" placeholder="Set goal or ask status..." />
+          <button id="sendButton" type="submit">Send</button>
+        </form>
+
+        <div class="quick-actions">
+          <button id="demoCursorBtn" type="button">Test Cursor</button>
+          <button id="demoFullBtn" type="button">Test Full Control</button>
+          <button id="pauseBtn" type="button">Pause</button>
+        </div>
+      </aside>
+    </div>
+
+    <script type="module" src="./overlay.js"></script>
+  </body>
+</html>

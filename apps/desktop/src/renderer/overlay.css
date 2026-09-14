@@ -1,0 +1,237 @@
+:root {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  font-family: "Space Grotesk", "Segoe UI", sans-serif;
+  overflow: hidden;
+}
+
+.dock {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 98px 1fr;
+  gap: 14px;
+  align-items: end;
+  -webkit-app-region: drag;
+}
+
+.dock.size-orb {
+  grid-template-columns: 1fr;
+  place-items: center;
+}
+
+.avatar {
+  position: relative;
+  width: 92px;
+  height: 92px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  justify-self: center;
+  -webkit-app-region: no-drag;
+}
+
+.avatar-core {
+  position: absolute;
+  inset: 11px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  color: #e8fff3;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  background: radial-gradient(circle at 30% 30%, #61ffb7 0%, #23a863 58%, #0b4f31 100%);
+  box-shadow: 0 0 20px #3dffab70;
+}
+
+.avatar-pulse {
+  position: absolute;
+  inset: 2px;
+  border-radius: 999px;
+  border: 1px dashed #6fffbf;
+  opacity: 0.86;
+  animation: ringSpin 7s linear infinite;
+}
+
+.chat-panel {
+  min-height: 320px;
+  max-height: 100%;
+  display: grid;
+  grid-template-rows: auto auto auto 1fr auto auto;
+  gap: 9px;
+  padding: 12px;
+  border-radius: 16px;
+  border: 1px solid rgba(69, 150, 106, 0.65);
+  background: rgba(5, 14, 10, 0.78);
+  backdrop-filter: blur(8px);
+}
+
+.dock.size-orb .chat-panel {
+  display: none;
+}
+
+.dock.size-compact .chat-panel {
+  max-width: 460px;
+}
+
+.dock.size-expanded .chat-panel {
+  max-width: 700px;
+}
+
+.panel-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.badge {
+  font-size: 0.75rem;
+  color: #aff6ce;
+  border: 1px solid rgba(87, 179, 126, 0.75);
+  border-radius: 999px;
+  padding: 3px 9px;
+  white-space: nowrap;
+}
+
+.panel-actions {
+  display: flex;
+  gap: 5px;
+}
+
+button,
+input {
+  border: 1px solid rgba(63, 131, 95, 0.82);
+  border-radius: 9px;
+  background: rgba(11, 27, 20, 0.92);
+  color: #e3ffef;
+  padding: 9px 10px;
+  font-size: 0.92rem;
+  -webkit-app-region: no-drag;
+}
+
+button:hover {
+  filter: brightness(1.08);
+}
+
+button.ghost {
+  background: rgba(10, 21, 16, 0.7);
+  color: #baf7d5;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.avatar-text {
+  margin: 0;
+  color: #d8ffea;
+  font-size: 0.98rem;
+  line-height: 1.36;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.intent-line {
+  margin: 0;
+  color: #93e9be;
+  font-size: 0.9rem;
+  line-height: 1.34;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.chat-feed {
+  border: 1px solid rgba(53, 110, 79, 0.75);
+  border-radius: 10px;
+  padding: 10px;
+  background: rgba(5, 13, 9, 0.82);
+  overflow: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  display: grid;
+  gap: 6px;
+}
+
+.chat-feed::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.chat-line {
+  margin: 0;
+  font-size: 0.94rem;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+  user-select: text;
+}
+
+.chat-line.agent {
+  color: #9fe7bf;
+}
+
+.chat-line.user {
+  color: #e7fff2;
+}
+
+.chat-form {
+  display: grid;
+  grid-template-columns: 1fr 110px;
+  gap: 6px;
+}
+
+#chatInput {
+  user-select: text;
+}
+
+.quick-actions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.avatar.state-thinking .avatar-core {
+  background: radial-gradient(circle at 30% 30%, #7cffb4 0%, #249a61 56%, #103f2b 100%);
+}
+
+.avatar.state-working .avatar-core {
+  background: radial-gradient(circle at 30% 30%, #7bffca 0%, #2ec177 56%, #0f532e 100%);
+  box-shadow: 0 0 22px #55ffbe90;
+}
+
+.avatar.state-permission .avatar-core {
+  background: radial-gradient(circle at 30% 30%, #ffef8d 0%, #ce9f31 56%, #684813 100%);
+}
+
+.avatar.state-error .avatar-core {
+  background: radial-gradient(circle at 30% 30%, #ff8da4 0%, #b63a57 56%, #5f1729 100%);
+}
+
+.avatar.state-success .avatar-core {
+  background: radial-gradient(circle at 30% 30%, #72ffbf 0%, #1f9d65 56%, #0d4c2f 100%);
+}
+
+.avatar.state-background .avatar-pulse {
+  opacity: 0.3;
+}
+
+@keyframes ringSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

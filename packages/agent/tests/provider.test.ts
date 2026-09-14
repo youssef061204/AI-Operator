@@ -1,0 +1,95 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import http from "node:http";
+import { OllamaProvider, boundedContext } from "../src/runtime/providers.js";
+import type { ModelContext } from "../src/runtime/contracts.js";
+const context: ModelContext = {
+  objective: "Inspect the fixture",
+  plan: [],
+  observations: [],
+  verification: [],
+  stepsRemaining: 2,
+};
+test("Ollama adapter validates transport, accounts usage, refuses redirects and cancels stalled requests", async () => {
+  let mode = "ok";
+  let requestBody: Record<string, unknown> = {};
+  const server = http.createServer(async (req, res) => {
+    let raw = "";
+    for await (const chunk of req) raw += String(chunk);
+    requestBody = JSON.parse(raw);
+    if (mode === "stall") return;
+    if (mode === "redirect") {
+      res.writeHead(302, { location: "http://127.0.0.1:1/" });
+      res.end();
+      return;
+    }
+    if (mode === "unavailable") {
+      res.writeHead(503);
+      res.end("private upstream response");
+      return;
+    }
+    if (mode === "malformed") {
+      res.end("not json");
+      return;
+    }
+    if (mode === "oversize") {
+      res.end("x".repeat(262145));
+      return;
+    }
+    res.setHeader("Content-Type", "application/json");
+    res.end(
+      JSON.stringify({
+        message: {
+          content: JSON.stringify({ kind: "finish", summary: "fixture" }),
+        },
+        prompt_eval_count: 7,
+        eval_count: 3,
+      }),
+    );
+  });
+  await new Promise<void>((resolve) => server.listen(0, "127.0.0.1", resolve));
+  const address = server.address() as { port: number };
+  const provider = new OllamaProvider(
+    "fixture-model",
+    `http://127.0.0.1:${address.port}`,
+  );
+  try {
+    const result = await provider.decide(context, new AbortController().signal);
+    assert.equal(result.tokens, 10);
+    assert.equal(requestBody.stream, false);
+    assert.equal(requestBody.format, "json");
+    for (const value of ["unavailable", "malformed", "oversize", "redirect"]) {
+      mode = value;
+      await assert.rejects(
+        provider.decide(context, new AbortController().signal),
+      );
+    }
+    mode = "stall";
+    const abort = new AbortController();
+    const pending = provider.decide(context, abort.signal);
+    setTimeout(() => abort.abort(), 30);
+    await assert.rejects(pending);
+  } finally {
+    server.closeAllConnections();
+    await new Promise<void>((resolve, reject) =>
+      server.close((error) => (error ? reject(error) : resolve())),
+    );
+  }
+});
+test("context budget includes escaping and oversized objective/criteria", () => {
+  const input = {
+    ...context,
+    objective: '"'.repeat(8000),
+    verification: [
+      {
+        kind: "file_contains" as const,
+        path: "file",
+        text: "text".repeat(10000),
+      },
+    ],
+    observations: [{ step: 1, error: '\\"'.repeat(40000) }],
+  };
+  const bounded = boundedContext(input, 2000);
+  assert.ok(JSON.stringify(bounded).length <= 2000);
+  assert.equal(input.objective.length, 8000);
+});

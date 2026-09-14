@@ -1,0 +1,42 @@
+{
+  "name": "@operator-assist/desktop",
+  "version": "0.1.0",
+  "private": true,
+  "main": "dist/main.cjs",
+  "type": "module",
+  "scripts": {
+    "build:ts": "tsc -p tsconfig.json && node ./scripts/copy-renderer.mjs",
+    "dev": "pnpm run build:ts && node ./scripts/dev-electron.mjs",
+    "build": "pnpm run build:ts && electron-builder",
+    "lint": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@operator-assist/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.2",
+    "cross-env": "^7.0.3",
+    "electron": "^44.3.0",
+    "electron-builder": "^26.15.3",
+    "electron-builder-squirrel-windows": "26.15.3",
+    "typescript": "^5.9.3"
+  },
+  "build": {
+    "appId": "com.operatorassist.desktop",
+    "productName": "Operator Assist",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "package.json"
+    ],
+    "asar": true,
+    "win": {
+      "target": [
+        "portable"
+      ],
+      "signAndEditExecutable": false
+    }
+  }
+}
