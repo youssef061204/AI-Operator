@@ -1,0 +1,542 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-09-15T23:19:55.016Z",
+  "mode": "reference-solution integrity; not agent capability",
+  "model": null,
+  "catalogTasks": 50,
+  "requestedTasks": 50,
+  "summary": {
+    "passed": 50,
+    "failed": 0,
+    "skipped": 0,
+    "successRate": 1,
+    "medianTaskMs": 35.96370000000002,
+    "p95TaskMs": 257.1670999999999,
+    "averageSteps": 0,
+    "averageInputTokens": 0,
+    "averageOutputTokens": 0,
+    "schemaValidFirstAttemptRate": 0,
+    "schemaRepairRate": 0,
+    "byCategory": {
+      "algorithms": {
+        "attempted": 5,
+        "completed": 5,
+        "successRate": 1
+      },
+      "parsing": {
+        "attempted": 5,
+        "completed": 5,
+        "successRate": 1
+      },
+      "validation": {
+        "attempted": 5,
+        "completed": 5,
+        "successRate": 1
+      },
+      "api": {
+        "attempted": 5,
+        "completed": 5,
+        "successRate": 1
+      },
+      "data": {
+        "attempted": 5,
+        "completed": 5,
+        "successRate": 1
+      },
+      "async": {
+        "attempted": 5,
+        "completed": 5,
+        "successRate": 1
+      },
+      "typescript": {
+        "attempted": 5,
+        "completed": 5,
+        "successRate": 1
+      },
+      "ui-state": {
+        "attempted": 5,
+        "completed": 5,
+        "successRate": 1
+      },
+      "cross-file": {
+        "attempted": 5,
+        "completed": 5,
+        "successRate": 1
+      },
+      "features": {
+        "attempted": 5,
+        "completed": 5,
+        "successRate": 1
+      }
+    },
+    "byTier": {
+      "A": {
+        "attempted": 35,
+        "completed": 35,
+        "successRate": 1
+      },
+      "B": {
+        "attempted": 10,
+        "completed": 10,
+        "successRate": 1
+      },
+      "C": {
+        "attempted": 5,
+        "completed": 5,
+        "successRate": 1
+      }
+    }
+  },
+  "results": [
+    {
+      "id": "algorithms-stable-dedup",
+      "category": "algorithms",
+      "difficulty": "easy",
+      "tier": "A",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 47.59530000000001
+    },
+    {
+      "id": "algorithms-binary-search",
+      "category": "algorithms",
+      "difficulty": "easy",
+      "tier": "A",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 35.57690000000002
+    },
+    {
+      "id": "algorithms-intervals",
+      "category": "algorithms",
+      "difficulty": "easy",
+      "tier": "A",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 36.789500000000004
+    },
+    {
+      "id": "algorithms-chunks",
+      "category": "algorithms",
+      "difficulty": "easy",
+      "tier": "A",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 37.35979999999998
+    },
+    {
+      "id": "algorithms-maximum",
+      "category": "algorithms",
+      "difficulty": "easy",
+      "tier": "A",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 33.24290000000002
+    },
+    {
+      "id": "parsing-csv",
+      "category": "parsing",
+      "difficulty": "easy",
+      "tier": "A",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 34.76239999999996
+    },
+    {
+      "id": "parsing-escaped-delimiter",
+      "category": "parsing",
+      "difficulty": "easy",
+      "tier": "A",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 35.5351
+    },
+    {
+      "id": "parsing-query-values",
+      "category": "parsing",
+      "difficulty": "easy",
+      "tier": "A",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 35.49400000000003
+    },
+    {
+      "id": "parsing-unicode",
+      "category": "parsing",
+      "difficulty": "easy",
+      "tier": "A",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 36.75849999999997
+    },
+    {
+      "id": "parsing-newlines",
+      "category": "parsing",
+      "difficulty": "easy",
+      "tier": "A",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 42.5985
+    },
+    {
+      "id": "validation-missing-values",
+      "category": "validation",
+      "difficulty": "easy",
+      "tier": "A",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 31.57439999999997
+    },
+    {
+      "id": "validation-bounds",
+      "category": "validation",
+      "difficulty": "easy",
+      "tier": "A",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 33.75780000000009
+    },
+    {
+      "id": "validation-nested",
+      "category": "validation",
+      "difficulty": "easy",
+      "tier": "A",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 37.413400000000024
+    },
+    {
+      "id": "validation-unknown-keys",
+      "category": "validation",
+      "difficulty": "easy",
+      "tier": "A",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 31.3981
+    },
+    {
+      "id": "validation-calendar-date",
+      "category": "validation",
+      "difficulty": "easy",
+      "tier": "A",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 32.72500000000002
+    },
+    {
+      "id": "api-pagination",
+      "category": "api",
+      "difficulty": "easy",
+      "tier": "A",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 39.761799999999994
+    },
+    {
+      "id": "api-filters",
+      "category": "api",
+      "difficulty": "easy",
+      "tier": "A",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 32.76430000000005
+    },
+    {
+      "id": "api-error-status",
+      "category": "api",
+      "difficulty": "easy",
+      "tier": "A",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 36.34859999999992
+    },
+    {
+      "id": "api-token-expiry",
+      "category": "api",
+      "difficulty": "easy",
+      "tier": "A",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 39.399
+    },
+    {
+      "id": "api-idempotency",
+      "category": "api",
+      "difficulty": "easy",
+      "tier": "A",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 35.691100000000006
+    },
+    {
+      "id": "data-group-sum",
+      "category": "data",
+      "difficulty": "easy",
+      "tier": "A",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 33.01100000000008
+    },
+    {
+      "id": "data-null-sort",
+      "category": "data",
+      "difficulty": "easy",
+      "tier": "A",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 32.96389999999997
+    },
+    {
+      "id": "data-immutable-update",
+      "category": "data",
+      "difficulty": "easy",
+      "tier": "A",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 33.160799999999995
+    },
+    {
+      "id": "data-left-join",
+      "category": "data",
+      "difficulty": "easy",
+      "tier": "A",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 32.06230000000005
+    },
+    {
+      "id": "data-currency",
+      "category": "data",
+      "difficulty": "easy",
+      "tier": "A",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 32.26869999999997
+    },
+    {
+      "id": "async-deduplicate",
+      "category": "async",
+      "difficulty": "medium",
+      "tier": "B",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 33.06599999999992
+    },
+    {
+      "id": "async-rejection-cache",
+      "category": "async",
+      "difficulty": "medium",
+      "tier": "B",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 32.262699999999995
+    },
+    {
+      "id": "async-stale-response",
+      "category": "async",
+      "difficulty": "medium",
+      "tier": "B",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 34.56020000000012
+    },
+    {
+      "id": "async-concurrency",
+      "category": "async",
+      "difficulty": "medium",
+      "tier": "B",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 51.03649999999993
+    },
+    {
+      "id": "async-abort",
+      "category": "async",
+      "difficulty": "medium",
+      "tier": "B",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 35.96370000000002
+    },
+    {
+      "id": "typescript-union",
+      "category": "typescript",
+      "difficulty": "medium",
+      "tier": "C",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 257.1670999999999
+    },
+    {
+      "id": "typescript-generic",
+      "category": "typescript",
+      "difficulty": "medium",
+      "tier": "C",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 247.56579999999985
+    },
+    {
+      "id": "typescript-nullable",
+      "category": "typescript",
+      "difficulty": "medium",
+      "tier": "C",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 259.72219999999993
+    },
+    {
+      "id": "typescript-readonly",
+      "category": "typescript",
+      "difficulty": "medium",
+      "tier": "C",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 252.28970000000004
+    },
+    {
+      "id": "typescript-overload",
+      "category": "typescript",
+      "difficulty": "medium",
+      "tier": "C",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 260.16409999999996
+    },
+    {
+      "id": "ui-state-functional-update",
+      "category": "ui-state",
+      "difficulty": "easy",
+      "tier": "A",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 41.14269999999988
+    },
+    {
+      "id": "ui-state-remove-item",
+      "category": "ui-state",
+      "difficulty": "easy",
+      "tier": "A",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 42.820700000000215
+    },
+    {
+      "id": "ui-state-selection",
+      "category": "ui-state",
+      "difficulty": "easy",
+      "tier": "A",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 39.545500000000175
+    },
+    {
+      "id": "ui-state-unsubscribe",
+      "category": "ui-state",
+      "difficulty": "easy",
+      "tier": "A",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 32.66969999999992
+    },
+    {
+      "id": "ui-state-derived-filter",
+      "category": "ui-state",
+      "difficulty": "easy",
+      "tier": "A",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 48.73439999999982
+    },
+    {
+      "id": "cross-file-result-contract",
+      "category": "cross-file",
+      "difficulty": "medium",
+      "tier": "B",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 39.42440000000033
+    },
+    {
+      "id": "cross-file-config-default",
+      "category": "cross-file",
+      "difficulty": "medium",
+      "tier": "B",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 35.222499999999854
+    },
+    {
+      "id": "cross-file-validator",
+      "category": "cross-file",
+      "difficulty": "medium",
+      "tier": "B",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 35.184099999999944
+    },
+    {
+      "id": "cross-file-shared-error",
+      "category": "cross-file",
+      "difficulty": "medium",
+      "tier": "B",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 38.01299999999992
+    },
+    {
+      "id": "cross-file-dependency-injection",
+      "category": "cross-file",
+      "difficulty": "medium",
+      "tier": "B",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 31.433199999999943
+    },
+    {
+      "id": "features-ttl-cache",
+      "category": "features",
+      "difficulty": "easy",
+      "tier": "A",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 30.52980000000025
+    },
+    {
+      "id": "features-retry-budget",
+      "category": "features",
+      "difficulty": "easy",
+      "tier": "A",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 31.985999999999876
+    },
+    {
+      "id": "features-once-event",
+      "category": "features",
+      "difficulty": "easy",
+      "tier": "A",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 36.82920000000013
+    },
+    {
+      "id": "features-options-compat",
+      "category": "features",
+      "difficulty": "easy",
+      "tier": "A",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 39.340999999999894
+    },
+    {
+      "id": "features-pure-parser",
+      "category": "features",
+      "difficulty": "easy",
+      "tier": "A",
+      "mode": "integrity",
+      "status": "passed",
+      "elapsedMs": 55.45940000000019
+    }
+  ]
+}

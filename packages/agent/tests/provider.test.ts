@@ -1,7 +1,11 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import http from "node:http";
-import { OllamaProvider, boundedContext } from "../src/runtime/providers.js";
+import {
+  GeminiProvider,
+  OllamaProvider,
+  boundedContext,
+} from "../src/runtime/providers.js";
 import type { ModelContext } from "../src/runtime/contracts.js";
 const context: ModelContext = {
   objective: "Inspect the fixture",
@@ -57,7 +61,11 @@ test("Ollama adapter validates transport, accounts usage, refuses redirects and 
     const result = await provider.decide(context, new AbortController().signal);
     assert.equal(result.tokens, 10);
     assert.equal(requestBody.stream, false);
-    assert.equal(requestBody.format, "json");
+    assert.equal(typeof requestBody.format, "object");
+    assert.deepEqual(
+      (requestBody.format as { oneOf?: unknown[] }).oneOf?.length,
+      2,
+    );
     for (const value of ["unavailable", "malformed", "oversize", "redirect"]) {
       mode = value;
       await assert.rejects(
@@ -92,4 +100,45 @@ test("context budget includes escaping and oversized objective/criteria", () => 
   const bounded = boundedContext(input, 2000);
   assert.ok(JSON.stringify(bounded).length <= 2000);
   assert.equal(input.objective.length, 8000);
+});
+
+test("Gemini adapter sends structured JSON requests and records usage", async () => {
+  let requestBody: Record<string, unknown> = {};
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async (_input, init) => {
+    requestBody = JSON.parse(String(init?.body));
+    return new Response(
+      JSON.stringify({
+        candidates: [
+          {
+            content: {
+              parts: [{ text: '{"kind":"finish","summary":"fixture"}' }],
+            },
+            finishReason: "STOP",
+          },
+        ],
+        usageMetadata: { promptTokenCount: 11, candidatesTokenCount: 5 },
+      }),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  };
+  const provider = new GeminiProvider(
+    "gemini-test",
+    "test-key-that-is-long-enough",
+  );
+  try {
+    const result = await provider.decide(context, new AbortController().signal);
+    assert.equal(result.tokens, 16);
+    assert.equal(
+      (requestBody.generationConfig as { responseMimeType: string })
+        .responseMimeType,
+      "application/json",
+    );
+    assert.equal(
+      (requestBody.contents as Array<{ role: string }>)[0].role,
+      "user",
+    );
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
 });

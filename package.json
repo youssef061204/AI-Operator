@@ -1,40 +1,40 @@
 {
-    "name": "operator-assist-monorepo",
-    "private": true,
-    "version": "0.1.0",
-    "packageManager": "pnpm@10.6.0",
-    "scripts": {
-        "dev": "pnpm --filter @operator-assist/shared build && concurrently -k -n AGENT,WEB \"pnpm --filter @operator-assist/agent dev\" \"pnpm --filter @operator-assist/web dev\"",
-        "dev:setup": "powershell -ExecutionPolicy Bypass -File ./scripts/setup-all.ps1",
-        "build": "pnpm -r build",
-        "desktop:build": "pnpm --filter @operator-assist/desktop build",
-        "lint": "pnpm -r lint && pnpm --filter @operator-assist/web exec eslint app lib/runtime.ts",
-        "typecheck": "pnpm -r lint",
-        "test": "pnpm --filter @operator-assist/agent test",
-        "evaluate": "pnpm --filter @operator-assist/agent evaluate",
-        "cli": "pnpm --filter @operator-assist/agent cli",
-        "test:browser": "playwright test",
-        "test:live": "pnpm --filter @operator-assist/agent exec tsx tests/live-smoke.ts",
-        "format:check": "prettier --check \"packages/agent/src/runtime/*.ts\" \"packages/agent/src/{main,cli,index}.ts\" \"packages/agent/tests/*.ts\" \"apps/web/app/**/*.tsx\" \"apps/web/lib/runtime.ts\" \"tests/browser/*.ts\" playwright.config.ts"
-    },
-    "devDependencies": {
-        "@playwright/test": "1.58.2",
-        "concurrently": "^9.2.4",
-        "prettier": "3.5.3",
-        "typescript": "^5.9.3"
-    },
-    "engines": {
-        "node": ">=24.13.0 <25"
-    },
-    "pnpm": {
-        "onlyBuiltDependencies": [
-            "electron",
-            "esbuild",
-            "sharp",
-            "unrs-resolver"
-        ],
-        "overrides": {
-            "electron-builder-squirrel-windows": "26.15.3"
-        }
+  "name": "operator-assist-monorepo",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "pnpm@10.6.0",
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "dev:setup": "powershell -ExecutionPolicy Bypass -File ./scripts/setup-all.ps1",
+    "build": "pnpm -r build",
+    "lint": "pnpm --filter @operator-assist/web lint",
+    "typecheck": "pnpm -r typecheck",
+    "test": "pnpm --filter @operator-assist/agent test",
+    "evaluate": "pnpm --filter @operator-assist/agent evaluate",
+    "benchmark:integrity": "pnpm --filter @operator-assist/agent exec tsx ../../benchmarks/run.ts --integrity",
+    "benchmark:live": "pnpm --filter @operator-assist/agent exec tsx ../../benchmarks/run.ts",
+    "cli": "pnpm --filter @operator-assist/agent cli",
+    "test:browser": "playwright test",
+    "test:live": "pnpm --filter @operator-assist/agent exec tsx tests/live-smoke.ts",
+    "format:check": "prettier --check \"packages/agent/src/runtime/*.ts\" \"packages/agent/src/{main,cli,index}.ts\" \"packages/agent/tests/*.ts\" \"apps/web/app/**/*.tsx\" \"apps/web/lib/runtime.ts\" \"tests/browser/*.ts\" playwright.config.ts"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.58.2",
+    "concurrently": "^9.2.4",
+    "prettier": "3.5.3",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=24.13.0 <25"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp",
+      "unrs-resolver"
+    ],
+    "overrides": {
+      "electron-builder-squirrel-windows": "26.15.3"
     }
+  }
 }

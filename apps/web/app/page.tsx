@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import {
   runtime,
   RUNTIME_BASE,
@@ -14,6 +15,9 @@ export default function OperatorPage() {
   const [health, setHealth] = useState("");
   const [error, setError] = useState("");
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [evaluations, setEvaluations] = useState<
+    Array<{ name: string; result: unknown }>
+  >([]);
   const [selected, setSelected] = useState("");
   const [task, setTask] = useState<Task | null>(null);
   const [events, setEvents] = useState<RuntimeEvent[]>([]);
@@ -22,14 +26,41 @@ export default function OperatorPage() {
   const [verifyText, setVerifyText] = useState("");
   const [busy, setBusy] = useState(false);
   const [refresh, setRefresh] = useState(0);
+  const [changes, setChanges] = useState<{
+    digest: string;
+    status: string;
+    files: Array<{ path: string; before: string | null; after: string | null }>;
+  } | null>(null);
   // Restore tab credentials after hydration; server rendering cannot access sessionStorage.
   useEffect(() => {
     const saved = sessionStorage.getItem("operator_runtime_token") ?? "";
     /* eslint-disable react-hooks/set-state-in-effect -- Restore external sessionStorage after SSR hydration. */
-    setTokenInput(saved);
-    setToken(saved);
+    if (saved) {
+      setTokenInput(saved);
+      setToken(saved);
+    }
     /* eslint-enable react-hooks/set-state-in-effect */
     const controller = new AbortController();
+    const connection = new URLSearchParams(location.hash.slice(1)).get(
+      "connect",
+    );
+    if (connection) {
+      history.replaceState(null, "", location.pathname + location.search);
+      runtime<{ connected: boolean }>("/session/bootstrap", "", {
+        method: "POST",
+        body: JSON.stringify({ code: connection }),
+        signal: controller.signal,
+      })
+        .then(() => {
+          setToken("browser-session");
+          setHealth("Connected securely to local runtime");
+        })
+        .catch((e) => setError(String(e)));
+    } else if (!saved) {
+      runtime<{ tasks: Task[] }>("/tasks", "", { signal: controller.signal })
+        .then(() => setToken("browser-session"))
+        .catch(() => undefined);
+    }
     runtime<{ service: string; provider: string }>("/health", "", {
       signal: controller.signal,
     })
@@ -47,11 +78,19 @@ export default function OperatorPage() {
       if (fetching) return;
       fetching = true;
       try {
-        const list = await runtime<{ tasks: Task[] }>("/tasks", token, {
-          signal: controller.signal,
-        });
+        const [list, evaluationList] = await Promise.all([
+          runtime<{ tasks: Task[] }>("/tasks", token, {
+            signal: controller.signal,
+          }),
+          runtime<{ records: Array<{ name: string; result: unknown }> }>(
+            "/evaluations",
+            token,
+            { signal: controller.signal },
+          ),
+        ]);
         if (controller.signal.aborted) return;
         setTasks(list.tasks);
+        setEvaluations(evaluationList.records);
         if (selected) {
           const [detail, history] = await Promise.all([
             runtime<{ task: Task }>(
@@ -83,6 +122,20 @@ export default function OperatorPage() {
       controller.abort();
     };
   }, [token, selected, refresh]);
+  useEffect(() => {
+    if (!task || !terminal.has(task.status)) {
+      return;
+    }
+    const controller = new AbortController();
+    runtime<{ changes: typeof changes }>(
+      `/tasks/${encodeURIComponent(task.id)}/changes`,
+      token,
+      { signal: controller.signal },
+    )
+      .then((result) => setChanges(result.changes))
+      .catch(() => setChanges(null));
+    return () => controller.abort();
+  }, [task, token, refresh]);
   async function act(path: string, body: object) {
     setBusy(true);
     setError("");
@@ -140,10 +193,52 @@ export default function OperatorPage() {
             Local tasks with explicit verification and reviewable actions.
           </p>
         </div>
-        <span className="chip">{health || "Checking runtime..."}</span>
+        <div className="row">
+          <Link href="/evaluations">Evaluation evidence</Link>
+          <span className="chip">{health || "Checking runtime..."}</span>
+        </div>
       </header>
-      <section className="panel grid">
-        <h2>Connect to local runtime</h2>
+      {(() => {
+        const record = evaluations.find(
+          (item) => item.name === "coding-benchmark.json",
+        );
+        const result = record?.result as
+          | {
+              mode?: string;
+              model?: string;
+              summary?: {
+                passed?: number;
+                failed?: number;
+                requestedTasks?: number;
+                successRate?: number;
+                medianTaskMs?: number;
+              };
+            }
+          | undefined;
+        return result?.summary ? (
+          <section
+            className="panel evaluation-strip"
+            aria-label="Live evaluation summary"
+          >
+            <div>
+              <strong>Live capability</strong>
+              <span className="muted"> {result.model ?? "unknown model"}</span>
+            </div>
+            <span>
+              {result.summary.passed ?? 0}/{result.summary.requestedTasks ?? 0}{" "}
+              tasks
+            </span>
+            <span>
+              {Math.round((result.summary.successRate ?? 0) * 100)}% success
+            </span>
+            <span>
+              {Math.round(result.summary.medianTaskMs ?? 0)} ms median
+            </span>
+          </section>
+        ) : null;
+      })()}
+      <details className="panel grid" open={!token}>
+        <summary>Connection settings</summary>
         <p className="muted">
           {RUNTIME_BASE} - Token stored for this browser tab session.
         </p>
@@ -186,7 +281,7 @@ export default function OperatorPage() {
             </button>
           )}
         </form>
-      </section>
+      </details>
       {error && (
         <div className="panel runtime-error" role="alert">
           {error}
@@ -338,8 +433,10 @@ export default function OperatorPage() {
                 ) : (
                   <p>No plan recorded yet.</p>
                 )}
-                <h3>Verification criteria</h3>
-                <pre>{json(task.verification)}</pre>
+                <details>
+                  <summary>Advanced task contract</summary>
+                  <pre>{json(task.verification)}</pre>
+                </details>
               </section>
               {task.approval && (
                 <section
@@ -363,7 +460,10 @@ export default function OperatorPage() {
                   </ul>
                   <h3>Exact action</h3>
                   <pre>{json(task.approval.call)}</pre>
-                  <p className="mono">Digest: {task.approval.digest}</p>
+                  <details>
+                    <summary>Advanced approval data</summary>
+                    <p className="mono">Digest: {task.approval.digest}</p>
+                  </details>
                   <div className="action-row">
                     <button
                       className="primary"
@@ -388,6 +488,63 @@ export default function OperatorPage() {
                       Deny
                     </button>
                   </div>
+                </section>
+              )}
+              {changes && (
+                <section className="panel grid" aria-label="Proposed changes">
+                  <h2>Review changes</h2>
+                  <p>
+                    {changes.files.length} file
+                    {changes.files.length === 1 ? "" : "s"} changed. Status:{" "}
+                    {changes.status}.
+                  </p>
+                  {changes.files.map((file) => (
+                    <details key={file.path}>
+                      <summary>{file.path}</summary>
+                      <pre>{file.after ?? "(deleted)"}</pre>
+                    </details>
+                  ))}
+                  {changes.status === "proposed" && (
+                    <div className="action-row">
+                      <button
+                        className="primary"
+                        disabled={busy}
+                        onClick={() =>
+                          void act(
+                            `/tasks/${encodeURIComponent(task.id)}/accept`,
+                            { digest: changes.digest },
+                          )
+                        }
+                      >
+                        Accept changes
+                      </button>
+                      <button
+                        className="danger"
+                        disabled={busy}
+                        onClick={() =>
+                          void act(
+                            `/tasks/${encodeURIComponent(task.id)}/discard`,
+                            { digest: changes.digest },
+                          )
+                        }
+                      >
+                        Discard
+                      </button>
+                    </div>
+                  )}
+                  {changes.status === "accepted" && (
+                    <button
+                      disabled={busy}
+                      onClick={() =>
+                        void act(
+                          `/tasks/${encodeURIComponent(task.id)}/revert`,
+                          { digest: changes.digest },
+                        )
+                      }
+                    >
+                      Revert accepted changes
+                    </button>
+                  )}
                 </section>
               )}
               <section className="panel grid">

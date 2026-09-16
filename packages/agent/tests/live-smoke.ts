@@ -4,7 +4,7 @@ import os from "node:os";
 import { fileURLToPath } from "node:url";
 import { AgentRuntime } from "../src/runtime/runtime.js";
 import { TaskStore } from "../src/runtime/store.js";
-import { OllamaProvider } from "../src/runtime/providers.js";
+import { GeminiProvider } from "../src/runtime/providers.js";
 const dir = await fs.mkdtemp(path.join(os.tmpdir(), "operator-live-"));
 const root = path.join(dir, "workspace");
 await fs.mkdir(root);
@@ -13,11 +13,12 @@ await fs.writeFile(
   path.join(root, "test.cjs"),
   "const assert=require('node:assert/strict');assert.equal(require('./math.cjs').add(2,3),5);",
 );
-const model = process.env.OPERATOR_MODEL ?? "qwen2.5:7b-instruct";
+const model = process.env.GEMINI_MODEL ?? "gemini-3.8-flash";
 const runtime = new AgentRuntime(new TaskStore(path.join(dir, "data")), root, [
-  new OllamaProvider(
+  new GeminiProvider(
     model,
-    process.env.OPERATOR_MODEL_URL ?? "http://127.0.0.1:11434",
+    process.env.GEMINI_API_KEY ?? "",
+    process.env.GEMINI_API_URL,
   ),
 ]);
 runtime.events.on("event", (event) => {
@@ -63,7 +64,7 @@ try {
   );
   const output = {
     generatedAt: new Date().toISOString(),
-    mode: "live local Ollama smoke; one task, not a benchmark",
+    mode: "live Gemini smoke; one task, not a benchmark",
     model,
     elapsedMs: performance.now() - started,
     status: result.status,

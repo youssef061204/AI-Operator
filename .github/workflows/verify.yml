@@ -5,6 +5,7 @@ permissions:
 jobs:
   verify:
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.os }}
@@ -25,7 +26,7 @@ jobs:
       - run: pnpm evaluate
       - run: pnpm --filter @operator-assist/agent build
       - run: pnpm --filter @operator-assist/web build
-      - run: pnpm --filter @operator-assist/desktop build:ts
+      - run: pnpm benchmark:integrity
       - run: pnpm exec playwright install --with-deps chromium
       - run: pnpm test:browser
       - run: pnpm audit --prod

@@ -27,6 +27,7 @@ test("authenticated runtime API enforces host/origin, approves tasks, streams ev
     dataDir: join(directory, "data"),
     port: 0,
     token,
+    isolate: false,
     providers: [
       new FixtureProvider([
         {

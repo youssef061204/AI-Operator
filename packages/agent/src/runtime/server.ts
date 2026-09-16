@@ -10,8 +10,14 @@ import { randomBytes, timingSafeEqual } from "node:crypto";
 import { z } from "zod";
 import { AgentRuntime } from "./runtime.js";
 import { TaskStore } from "./store.js";
-import { OllamaProvider } from "./providers.js";
+import { GeminiProvider } from "./providers.js";
 import type { Provider, TaskEvent } from "./contracts.js";
+import {
+  DockerExecutionBackend,
+  NativeExecutionBackend,
+  type ExecutionBackend,
+} from "./execution.js";
+import { execFile } from "node:child_process";
 
 export interface ServerOptions {
   workspace: string;
@@ -20,6 +26,10 @@ export interface ServerOptions {
   token?: string;
   providers?: Provider[];
   origins?: string[];
+  isolate?: boolean;
+  bootstrapCode?: string;
+  evaluationDir?: string;
+  execution?: ExecutionBackend;
 }
 export async function startRuntimeServer(options: ServerOptions) {
   fs.mkdirSync(options.dataDir, { recursive: true });
@@ -35,23 +45,29 @@ export async function startRuntimeServer(options: ServerOptions) {
   }
   if (token.length < 32)
     throw new Error("API token must contain at least 32 characters");
-  const providers = options.providers ?? [
-    new OllamaProvider(
-      process.env.OPERATOR_MODEL ?? "qwen2.5-coder:7b",
-      process.env.OPERATOR_MODEL_URL ?? "http://127.0.0.1:11434",
+  const providers: Provider[] = options.providers ?? [
+    new GeminiProvider(
+      process.env.GEMINI_MODEL ?? "gemini-3.8-flash",
+      process.env.GEMINI_API_KEY ?? "",
+      process.env.GEMINI_API_URL ??
+        "https://generativelanguage.googleapis.com/v1beta",
     ),
   ];
-  if (!options.providers && process.env.OPERATOR_FALLBACK_MODEL)
-    providers.push(
-      new OllamaProvider(
-        process.env.OPERATOR_FALLBACK_MODEL,
-        process.env.OPERATOR_FALLBACK_URL ?? "http://127.0.0.1:11434",
-      ),
-    );
   const store = new TaskStore(options.dataDir);
+  const sessions = new Map<string, number>();
+  let bootstrap = options.bootstrapCode ?? randomBytes(32).toString("hex");
+  const bootstrapExpires = Date.now() + 5 * 60_000;
   let runtime: AgentRuntime;
+  const execution =
+    options.execution ??
+    (process.env.OPERATOR_EXECUTION_BACKEND === "native"
+      ? new NativeExecutionBackend()
+      : new DockerExecutionBackend());
   try {
-    runtime = new AgentRuntime(store, options.workspace, providers);
+    runtime = new AgentRuntime(store, options.workspace, providers, {
+      isolate: options.isolate !== false,
+      execution,
+    });
   } catch (error) {
     store.close();
     throw error;
@@ -83,6 +99,7 @@ export async function startRuntimeServer(options: ServerOptions) {
     if (origin) {
       res.setHeader("Access-Control-Allow-Origin", origin);
       res.setHeader("Vary", "Origin");
+      res.setHeader("Access-Control-Allow-Credentials", "true");
       res.setHeader(
         "Access-Control-Allow-Headers",
         "Authorization, Content-Type",
@@ -99,18 +116,83 @@ export async function startRuntimeServer(options: ServerOptions) {
       next();
       return;
     }
+    if (req.method === "POST" && req.path === "/session/bootstrap") {
+      if (!origin || !origins.has(origin)) {
+        res.status(403).json({ error: "A trusted browser origin is required" });
+        return;
+      }
+      next();
+      return;
+    }
     const actual = Buffer.from(req.headers.authorization ?? "");
     const expected = Buffer.from(`Bearer ${token}`);
+    const bearer =
+      actual.length === expected.length && timingSafeEqual(actual, expected);
+    const cookie = (req.headers.cookie ?? "")
+      .split(";")
+      .map((item) => item.trim())
+      .find((item) => item.startsWith("operator_session="))
+      ?.slice("operator_session=".length);
+    const session = cookie ? sessions.get(cookie) : undefined;
+    if (session && session < Date.now()) sessions.delete(cookie!);
+    const cookieAuthorized = Boolean(session && session > Date.now());
+    // Cookies are ambient credentials: every mutation must have a trusted Origin.
     if (
-      actual.length !== expected.length ||
-      !timingSafeEqual(actual, expected)
+      !bearer &&
+      cookieAuthorized &&
+      !["GET", "HEAD"].includes(req.method) &&
+      (!origin || !origins.has(origin))
     ) {
+      res.status(403).json({ error: "A trusted browser origin is required" });
+      return;
+    }
+    if (!bearer && !cookieAuthorized) {
       res.status(401).json({ error: "Bearer token required" });
       return;
     }
     next();
   });
   app.use(express.json({ limit: "256kb", strict: true }));
+  app.post("/session/bootstrap", (req, res) => {
+    const code = typeof req.body?.code === "string" ? req.body.code : "";
+    const actual = Buffer.from(code);
+    const expected = Buffer.from(bootstrap);
+    if (
+      !bootstrap ||
+      Date.now() >= bootstrapExpires ||
+      actual.length !== expected.length ||
+      !timingSafeEqual(actual, expected)
+    ) {
+      res.status(401).json({
+        error:
+          "Connection link expired or already used. Restart the launcher for a new link.",
+      });
+      return;
+    }
+    bootstrap = "";
+    for (const [key, expiry] of sessions)
+      if (expiry < Date.now()) sessions.delete(key);
+    const session = randomBytes(32).toString("hex");
+    sessions.set(session, Date.now() + 8 * 60 * 60_000);
+    res.setHeader(
+      "Set-Cookie",
+      `operator_session=${session}; HttpOnly; SameSite=Strict; Path=/; Max-Age=28800`,
+    );
+    res.json({ connected: true });
+  });
+  app.post("/session/logout", (req, res) => {
+    const cookie = (req.headers.cookie ?? "")
+      .split(";")
+      .map((item) => item.trim())
+      .find((item) => item.startsWith("operator_session="))
+      ?.slice("operator_session=".length);
+    if (cookie) sessions.delete(cookie);
+    res.setHeader(
+      "Set-Cookie",
+      "operator_session=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0",
+    );
+    res.json({ connected: false });
+  });
   app.get("/health", (_req, res) =>
     res.json({
       ok: true,
@@ -119,12 +201,100 @@ export async function startRuntimeServer(options: ServerOptions) {
     }),
   );
   app.get("/tasks", (_req, res) => res.json({ tasks: runtime.list() }));
+  app.get("/metadata", async (_req, res, next) => {
+    try {
+      const diagnostics: string[] = [];
+      if (execution.name === "docker") {
+        try {
+          await new Promise<void>((resolve, reject) =>
+            execFile(
+              "docker",
+              [
+                "image",
+                "inspect",
+                process.env.OPERATOR_DOCKER_IMAGE ??
+                  "node:24.13.0-bookworm-slim",
+              ],
+              { timeout: 3000, windowsHide: true, maxBuffer: 64_000 },
+              (error) => (error ? reject(error) : resolve()),
+            ),
+          );
+        } catch {
+          diagnostics.push(
+            "Docker or its execution image is unavailable. Start Docker and run: docker pull node:24.13.0-bookworm-slim",
+          );
+        }
+      }
+      if (!options.providers && !process.env.GEMINI_API_KEY)
+        diagnostics.push(
+          "GEMINI_API_KEY is missing. Add a Google AI Studio key to .env or the process environment.",
+        );
+      res.json({
+        workspace: options.workspace,
+        models: providers.map((provider) => provider.name),
+        backend: execution.name,
+        isolated: options.isolate !== false,
+        diagnostics,
+      });
+    } catch (error) {
+      next(error);
+    }
+  });
+  app.get("/evaluations", (_req, res, next) => {
+    try {
+      const records: Array<{ name: string; result: unknown }> = [];
+      if (options.evaluationDir && fs.existsSync(options.evaluationDir)) {
+        for (const name of fs
+          .readdirSync(options.evaluationDir)
+          .filter((name) => name.endsWith(".json"))
+          .slice(0, 30)) {
+          const file = path.join(options.evaluationDir, name);
+          const stat = fs.lstatSync(file);
+          if (!stat.isFile() || stat.isSymbolicLink() || stat.size > 5_000_000)
+            continue;
+          try {
+            records.push({
+              name,
+              result: JSON.parse(fs.readFileSync(file, "utf8")),
+            });
+          } catch {
+            /* Incomplete result files are not measurements. */
+          }
+        }
+      }
+      res.json({ records });
+    } catch (error) {
+      next(error);
+    }
+  });
   app.post("/tasks", (req, res) =>
     res.status(201).json({ task: runtime.create(req.body) }),
   );
   app.get("/tasks/:id", (req, res) =>
     res.json({ task: runtime.get(String(req.params.id)) }),
   );
+  app.get("/tasks/:id/changes", async (req, res, next) => {
+    try {
+      res.json({ changes: await runtime.changes(String(req.params.id)) });
+    } catch (error) {
+      next(error);
+    }
+  });
+  for (const action of ["accept", "discard", "revert"] as const) {
+    app.post(`/tasks/:id/${action}`, async (req, res, next) => {
+      try {
+        const { digest } = z
+          .object({ digest: z.string().regex(/^[a-f0-9]{64}$/) })
+          .strict()
+          .parse(req.body);
+        res.json({
+          changes: await runtime[action](String(req.params.id), digest),
+        });
+      } catch (error) {
+        next(error);
+      }
+    });
+  }
   app.get("/tasks/:id/events", (req, res) => {
     runtime.get(String(req.params.id));
     const after = z.coerce

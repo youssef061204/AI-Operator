@@ -2,28 +2,30 @@
 
 ```mermaid
 flowchart TD
-  UI[Next task console] --> API[Authenticated loopback API]
-  Desktop[Sandboxed Electron viewer] --> UI
+  Web[Next.js task and review UI] --> API[Loopback API / cookie or bearer auth]
   CLI[CLI] --> API
-  API --> Runtime[Single-workspace task runtime]
-  Runtime --> Provider[Injected providers / Ollama and fixtures]
-  Runtime --> Context[Bounded recent observations and plan]
-  Runtime --> Approval[Server-owned risk / exact approvals]
-  Approval --> Tools[Validated file and process tools]
-  Tools --> Checkpoint[Hash preconditions and snapshots]
-  Runtime --> Verification[User-supplied completion checks]
-  Runtime --> SQLite[Transactional state and events]
-  SQLite --> Stream[Authenticated NDJSON events]
+  API --> Runtime[Bounded AgentRuntime]
+  Runtime --> Gemini[Gemini 3.8 Flash]
+  Runtime --> Policy[Server-owned policy and approvals]
+  Runtime --> Workspace[Per-task Git worktree]
+  Runtime --> Tools[Validated file tools]
+  Tools --> Docker[Docker execution backend]
+  Workspace --> ChangeSet[Frozen multi-file changeset]
+  ChangeSet --> Accept[Accept / discard / revert]
+  Runtime --> Store[SQLite tasks and ordered events]
+  Runtime --> Verify[Independent task contract]
 ```
 
-Source of truth: `packages/agent/src/runtime`. Workspace/provider configuration belongs to startup, not API callers. Providers return unknown output which the runtime validates. Each action updates a public plan, passes permission checks, executes one tool and adds an observation. The next decision sees outcomes, including errors. Finish initiates verification; it cannot directly mark completion.
+`packages/agent/src/runtime` is the source of truth. The model proposes one typed decision per turn. The runtime validates it, owns risk, executes the action, records the observation, and independently verifies a finish request. A model response cannot mark a task successful by itself.
 
-One task runs per runtime/workspace, including canceled work still cleaning up. Each has an AbortController and deadline; approvals/pauses consume that deadline. Real Ollama calls also have request deadlines and bounded response bodies. Fallback uses only explicitly configured providers; unavailable models never silently become fixture success.
+Each isolated task gets a detached `--no-checkout` Git worktree populated from bounded regular source files, including safe dirty and untracked content. Preparation does not run repository checkout hooks, filters, textconv, or status/diff commands. The user's branch, index, and active files stay untouched while the task runs.
 
-Context uses deterministic character budgets, not exact token estimates. Truncated history is labeled; full observations remain in local storage. Oversized criteria can be compressed in prompts but runtime verification uses originals. Memory is persisted task history, not cross-project learning or a vector database.
+Commands go through an `ExecutionBackend`. Docker is the product default and receives only the task workspace, no Docker socket, no network, a read-only container root, dropped capabilities, one CPU, 512 MiB memory, 128 PIDs, bounded output, and a deadline. Native execution remains an explicit library backend for tests and exceptional local use.
 
-Queued tasks become running; running tasks may pause or await approval. Completed/failed/canceled/interrupted states never resume. Restart interrupts unfinished tasks after any stale data-directory lock is safely cleared (see security.md). The exclusive lock prevents a second runtime from reclassifying another live runtime's tasks. Checkpoint restore creates a separately approved operation whose success verifies restoration preconditions and the file operation, not the original objective.
+After verification and process cleanup, the broker freezes exact before/after bytes and hashes into a canonical changeset. Acceptance preflights every destination before any write and journals progress. Conflicts preserve external edits. Revert uses the same all-file preflight. Discard removes only the owned task workspace and retains the audit manifest.
 
-UI polls once per second. NDJSON offers live state/tool events, heartbeats and slow-client disconnects, not model-token streaming. SQLite event IDs support per-task `after` replay. Latest 200 tasks load at startup. Long-term retention and multi-process coordination remain limitations.
+Gemini 3.8 Flash is the supported model. Per-call records contain provider, actual model, duration, input/output tokens, estimated cost, status, and sanitized error. There is no silent fallback to another model. FixtureProvider is an explicit deterministic test seam and is never reported as model capability.
 
-The provider uses the [Ollama chat API](https://docs.ollama.com/api/chat): JSON response, bounded generation, usage counters when returned. Other providers can implement the interface; no untested commercial-provider support is claimed. Historical architecture is in `architecture-current.md` and `surface-audit.md`.
+SQLite commits each task snapshot and event together. Restart marks unfinished tasks interrupted instead of replaying uncertain effects. The UI presents the objective, plan, current action, approval, result, and changeset; raw events and digests stay in advanced views. The launcher exchanges a five-minute one-use URL-fragment capability for an HttpOnly SameSite browser session.
+
+The 50-task coding benchmark is separate from the 42-case runtime safety evaluation. Benchmark graders stay outside the model workspace and candidate code runs in a no-network Docker container with read-only mounts. Known-bad fixtures must fail and reference solutions must pass before a case counts as valid.

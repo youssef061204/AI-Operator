@@ -25,6 +25,16 @@ export type Task = {
   metrics: object;
   verification: object[];
   checkpoints: string[];
+  executionBackend?: string;
+  modelHistory?: Array<{
+    provider: string;
+    model: string;
+    durationMs: number;
+    inputTokens: number | null;
+    outputTokens: number | null;
+    estimatedCostUsd: number | null;
+    status: string;
+  }>;
 };
 export type RuntimeEvent = {
   seq: number;
@@ -40,6 +50,7 @@ export async function runtime<T>(
   const response = await fetch(`${RUNTIME_BASE}${path}`, {
     ...options,
     cache: "no-store",
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
       ...(token ? { Authorization: `Bearer ${token}` } : {}),

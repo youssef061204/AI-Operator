@@ -35,6 +35,8 @@ export const VerificationSchema = z.discriminatedUnion("kind", [
 export const TaskRequestSchema = z
   .object({
     objective: z.string().trim().min(3).max(8000),
+    workspace: z.string().min(1).max(4096).optional(),
+    providerName: z.string().min(1).max(200).optional(),
     verification: z.array(VerificationSchema).min(1).max(8),
     limits: z
       .object({
@@ -75,7 +77,28 @@ export interface Observation {
   result?: Record<string, unknown>;
   error?: string;
 }
+export interface ModelCallRecord {
+  provider: string;
+  model: string;
+  startedAt: number;
+  durationMs: number;
+  inputTokens: number | null;
+  outputTokens: number | null;
+  estimatedCostUsd: number | null;
+  promptChars?: number;
+  responseChars?: number;
+  status: "success" | "error";
+  error?: string;
+}
 export interface Task extends TaskRequest {
+  workspaceInfo?: {
+    taskId: string;
+    workspace: string;
+    baseHead: string;
+    kind: "git-worktree";
+  };
+  executionBackend?: string;
+  modelHistory?: ModelCallRecord[];
   id: string;
   status: Status;
   plan: string[];
@@ -95,6 +118,9 @@ export interface Task extends TaskRequest {
     modelMs: number;
     toolMs: number;
     tokens: number;
+    schemaValidFirstAttempt?: number;
+    schemaRepairs?: number;
+    schemaFailures?: number;
   };
 }
 export interface TaskEvent {
@@ -111,15 +137,48 @@ export interface ModelContext {
   verification: TaskRequest["verification"];
   stepsRemaining: number;
 }
+export interface ProviderOutput {
+  decision: unknown;
+  tokens?: number;
+  inputTokens?: number;
+  outputTokens?: number;
+  estimatedCostUsd?: number;
+  model?: string;
+  promptChars?: number;
+  responseChars?: number;
+}
 export interface Provider {
   name: string;
-  decide(
-    context: ModelContext,
-    signal: AbortSignal,
-  ): Promise<{ decision: unknown; tokens?: number }>;
+  decide(context: ModelContext, signal: AbortSignal): Promise<ProviderOutput>;
 }
 
 export const PersistedTaskSchema = TaskRequestSchema.extend({
+  workspaceInfo: z
+    .object({
+      taskId: z.string(),
+      workspace: z.string(),
+      baseHead: z.string(),
+      kind: z.literal("git-worktree"),
+    })
+    .optional(),
+  executionBackend: z.string().optional(),
+  modelHistory: z
+    .array(
+      z.object({
+        provider: z.string(),
+        model: z.string(),
+        startedAt: z.number(),
+        durationMs: z.number(),
+        inputTokens: z.number().nullable(),
+        outputTokens: z.number().nullable(),
+        estimatedCostUsd: z.number().nullable(),
+        promptChars: z.number().optional(),
+        responseChars: z.number().optional(),
+        status: z.enum(["success", "error"]),
+        error: z.string().optional(),
+      }),
+    )
+    .optional(),
   id: z.string().min(1),
   status: z.enum([
     "queued",
@@ -166,6 +225,9 @@ export const PersistedTaskSchema = TaskRequestSchema.extend({
     modelMs: z.number().nonnegative(),
     toolMs: z.number().nonnegative(),
     tokens: z.number().nonnegative(),
+    schemaValidFirstAttempt: z.number().nonnegative().optional(),
+    schemaRepairs: z.number().nonnegative().optional(),
+    schemaFailures: z.number().nonnegative().optional(),
   }),
 });
 

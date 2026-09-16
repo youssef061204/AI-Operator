@@ -45,3 +45,6 @@ artifacts/verification/*
 !artifacts/verification/dependency-audit-all.json
 .operator/
 .next-e2e/
+artifacts/evaluation/live-runs/
+artifacts/evaluation/live-benchmark.json
+historical/desktop-viewer/release/

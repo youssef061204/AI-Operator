@@ -8,7 +8,8 @@
     "build:ts": "tsc -p tsconfig.json && node ./scripts/copy-renderer.mjs",
     "dev": "pnpm run build:ts && node ./scripts/dev-electron.mjs",
     "build": "pnpm run build:ts && electron-builder",
-    "lint": "tsc -p tsconfig.json --noEmit"
+    "lint": "tsc -p tsconfig.json --noEmit",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
     "@operator-assist/shared": "workspace:*"

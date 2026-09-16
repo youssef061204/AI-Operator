@@ -10,7 +10,7 @@ import {
   sep,
   win32,
 } from "node:path";
-import { spawn } from "node:child_process";
+import { NativeExecutionBackend, type ExecutionBackend } from "./execution.js";
 import { z } from "zod";
 
 const MAX_READ_BYTES = 64 * 1024;
@@ -145,7 +145,11 @@ export class WorkspaceTools {
   private readonly checkpointDir: string;
   private mutationTail: Promise<void> = Promise.resolve();
 
-  public constructor(workspace: string, checkpointDir: string) {
+  public constructor(
+    workspace: string,
+    checkpointDir: string,
+    private readonly execution: ExecutionBackend = new NativeExecutionBackend(),
+  ) {
     this.workspace = resolve(workspace);
     this.checkpointDir = resolve(checkpointDir);
     this.assertSafeAbsoluteAncestors(this.workspace);
@@ -417,6 +421,7 @@ export class WorkspaceTools {
     if (first === -1) throw new Error("oldText was not found");
     if (existing.indexOf(oldText, first + oldText.length) !== -1)
       throw new Error("oldText must occur exactly once");
+    if (oldText === newText) throw new Error("Patch would not change the file");
     const content = `${existing.slice(0, first)}${newText}${existing.slice(first + oldText.length)}`;
     this.assertTextSize(content);
     this.throwIfAborted(signal);
@@ -581,113 +586,10 @@ export class WorkspaceTools {
     if (!stat.isDirectory())
       throw new Error(`Not a directory: ${this.displayPath(cwd)}`);
     if (signal.aborted) throw this.abortError();
-    const env = this.safeEnvironment();
-    return new Promise<Record<string, unknown>>((resolveResult, reject) => {
-      let endedBy: "timeout" | "abort" | undefined;
-      let child;
-      try {
-        child = spawn(command, args, {
-          cwd: directory,
-          env,
-          shell: false,
-          windowsHide: true,
-          detached: process.platform !== "win32",
-        });
-      } catch (error) {
-        reject(error);
-        return;
-      }
-      const stdout = { chunks: [] as Buffer[], length: 0, truncated: false };
-      const stderr = { chunks: [] as Buffer[], length: 0, truncated: false };
-      child.stdout?.on("data", (chunk: Buffer) =>
-        appendBounded(stdout, Buffer.from(chunk)),
-      );
-      child.stderr?.on("data", (chunk: Buffer) =>
-        appendBounded(stderr, Buffer.from(chunk)),
-      );
-      const terminate = (): void => {
-        if (child.pid === undefined) return;
-        if (process.platform === "win32") {
-          const killer = spawn(
-            "taskkill",
-            ["/PID", String(child.pid), "/T", "/F"],
-            { shell: false, windowsHide: true, stdio: "ignore" },
-          );
-          killer.on("error", () => child.kill("SIGKILL"));
-        } else {
-          try {
-            process.kill(-child.pid, "SIGTERM");
-          } catch {
-            child.kill("SIGTERM");
-          }
-          setTimeout(() => {
-            try {
-              process.kill(-child.pid!, "SIGKILL");
-            } catch {
-              /* already exited */
-            }
-          }, 1_000).unref();
-        }
-      };
-      const onAbort = (): void => {
-        if (endedBy === undefined) {
-          endedBy = "abort";
-          terminate();
-        }
-      };
-      const timeout = setTimeout(() => {
-        if (endedBy === undefined) {
-          endedBy = "timeout";
-          terminate();
-        }
-      }, timeoutMs);
-      signal.addEventListener("abort", onAbort, { once: true });
-      if (signal.aborted) onAbort();
-      child.once("error", (error) => {
-        clearTimeout(timeout);
-        signal.removeEventListener("abort", onAbort);
-        reject(error);
-      });
-      child.once("close", (exitCode, exitSignal) => {
-        clearTimeout(timeout);
-        signal.removeEventListener("abort", onAbort);
-        if (endedBy === "abort") {
-          reject(this.abortError());
-          return;
-        }
-        if (endedBy === "timeout") {
-          reject(new Error(`Shell command timed out after ${timeoutMs}ms`));
-          return;
-        }
-        resolveResult({
-          command,
-          args,
-          cwd: this.relativePath(directory),
-          exitCode,
-          signal: exitSignal,
-          stdout: Buffer.concat(stdout.chunks).toString("utf8"),
-          stderr: Buffer.concat(stderr.chunks).toString("utf8"),
-          stdoutTruncated: stdout.truncated,
-          stderrTruncated: stderr.truncated,
-        });
-      });
-    });
-  }
-
-  private safeEnvironment(): NodeJS.ProcessEnv {
-    const env: NodeJS.ProcessEnv = {};
-    for (const key of [
-      "PATH",
-      "PATHEXT",
-      "SystemRoot",
-      "WINDIR",
-      "ComSpec",
-      "TEMP",
-      "TMP",
-    ]) {
-      if (process.env[key] !== undefined) env[key] = process.env[key];
-    }
-    return env;
+    return await this.execution.run(
+      { workspace: this.workspace, cwd: directory, command, args, timeoutMs },
+      signal,
+    );
   }
 
   private resolvePath(input: string, allowMissingFinal = false): string {

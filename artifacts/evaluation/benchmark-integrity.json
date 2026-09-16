@@ -1,0 +1,308 @@
+{
+  "kind": "benchmark-integrity",
+  "generatedAt": "2026-09-16T00:45:28.730Z",
+  "tasks": 50,
+  "valid": 50,
+  "results": [
+    {
+      "id": "algorithms-stable-dedup",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "algorithms-binary-search",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "algorithms-intervals",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "algorithms-chunks",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "algorithms-maximum",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "parsing-csv",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "parsing-escaped-delimiter",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "parsing-query-values",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "parsing-unicode",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "parsing-newlines",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "validation-missing-values",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "validation-bounds",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "validation-nested",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "validation-unknown-keys",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "validation-calendar-date",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "api-pagination",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "api-filters",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "api-error-status",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "api-token-expiry",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "api-idempotency",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "data-group-sum",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "data-null-sort",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "data-immutable-update",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "data-left-join",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "data-currency",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "async-deduplicate",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "async-rejection-cache",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "async-stale-response",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "async-concurrency",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "async-abort",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "typescript-union",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "typescript-generic",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "typescript-nullable",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "typescript-readonly",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "typescript-overload",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "ui-state-functional-update",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "ui-state-remove-item",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "ui-state-selection",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "ui-state-unsubscribe",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "ui-state-derived-filter",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "cross-file-result-contract",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "cross-file-config-default",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "cross-file-validator",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "cross-file-shared-error",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "cross-file-dependency-injection",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "features-ttl-cache",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "features-retry-budget",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "features-once-event",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "features-options-compat",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    },
+    {
+      "id": "features-pure-parser",
+      "baselineRejected": true,
+      "referenceAccepted": true,
+      "valid": true
+    }
+  ]
+}

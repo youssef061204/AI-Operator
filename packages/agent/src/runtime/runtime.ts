@@ -1,6 +1,7 @@
 import { randomUUID, createHash } from "node:crypto";
 import { EventEmitter } from "node:events";
 import path from "node:path";
+import { z } from "zod";
 import {
   TaskRequestSchema,
   DecisionSchema,
@@ -15,6 +16,8 @@ import {
 import { WorkspaceTools, type ToolCall } from "./tools.js";
 import { TaskStore, redact } from "./store.js";
 import { boundedContext } from "./providers.js";
+import { TaskWorkspaceBroker, type ChangeSet } from "./workspaces.js";
+import { NativeExecutionBackend, type ExecutionBackend } from "./execution.js";
 
 export function digest(value: unknown): string {
   function canonical(v: unknown): unknown {
@@ -41,18 +44,25 @@ interface Control {
 export class AgentRuntime {
   readonly events = new EventEmitter();
   readonly tools: WorkspaceTools;
+  private taskTools = new Map<string, WorkspaceTools>();
+  private brokers = new Map<string, TaskWorkspaceBroker>();
   private tasks = new Map<string, Task>();
   private controls = new Map<string, Control>();
   constructor(
     readonly store: TaskStore,
-    workspace: string,
+    private readonly workspace: string,
     readonly providers: Provider[],
+    private readonly options: {
+      isolate?: boolean;
+      execution?: ExecutionBackend;
+    } = {},
   ) {
     if (!providers.length)
       throw new Error("At least one model provider is required");
     this.tools = new WorkspaceTools(
       workspace,
       path.join(store.directory, "checkpoints"),
+      options.execution,
     );
     for (const task of store.list()) this.tasks.set(task.id, task);
   }
@@ -96,6 +106,17 @@ export class AgentRuntime {
   create(input: unknown): Task {
     this.assertIdle();
     const request = TaskRequestSchema.parse(input);
+    if (
+      request.providerName &&
+      !this.providers.some((p) => p.name === request.providerName)
+    )
+      throw new Error("Unknown configured provider");
+    if (
+      request.workspace &&
+      !this.options.isolate &&
+      path.resolve(request.workspace) !== path.resolve(this.workspace)
+    )
+      throw new Error("Workspace selection requires isolation");
     const now = Date.now();
     const task: Task = {
       ...request,
@@ -108,6 +129,9 @@ export class AgentRuntime {
       deadline: now + request.limits.timeoutMs,
       observations: [],
       checkpoints: [],
+      executionBackend: (this.options.execution ?? new NativeExecutionBackend())
+        .name,
+      modelHistory: [],
       metrics: {
         modelCalls: 0,
         toolCalls: 0,
@@ -115,6 +139,9 @@ export class AgentRuntime {
         modelMs: 0,
         toolMs: 0,
         tokens: 0,
+        schemaValidFirstAttempt: 0,
+        schemaRepairs: 0,
+        schemaFailures: 0,
       },
     };
     for (const [tool, policy] of Object.entries(task.policy)) {
@@ -148,7 +175,26 @@ export class AgentRuntime {
       verification: task.verification,
       policy: task.policy,
     });
-    this.launch(task, () => this.loop(task));
+    this.launch(task, async () => {
+      if (this.options.isolate) {
+        const broker = this.broker(task);
+        task.workspaceInfo = await broker.prepare(task.id);
+        this.taskTools.set(
+          task.id,
+          new WorkspaceTools(
+            task.workspaceInfo.workspace,
+            path.join(this.store.directory, "checkpoints", task.id),
+            this.options.execution,
+          ),
+        );
+        this.check(task);
+        this.emit(task, "workspace_prepared", {
+          kind: task.workspaceInfo.kind,
+          baseHead: task.workspaceInfo.baseHead,
+        });
+      }
+      await this.loop(task);
+    });
     return this.public(task);
   }
   private launch(task: Task, work: () => Promise<void>): void {
@@ -212,7 +258,7 @@ export class AgentRuntime {
   ): Promise<void> {
     await this.gate(task);
     const control = this.controls.get(task.id)!;
-    const details = this.tools.describe(call);
+    const details = this.toolsFor(task).describe(call);
     const policy = task.policy[call.tool] ?? "ask";
     if (policy === "deny") throw new Error(`Policy denies ${call.tool}`);
     if (details.risk === "LOW") return;
@@ -359,7 +405,7 @@ export class AgentRuntime {
     task.metrics.toolCalls++;
     let result: Record<string, unknown> | undefined;
     try {
-      result = await this.tools.execute(
+      result = await this.toolsFor(task).execute(
         call,
         this.controls.get(task.id)!.abort.signal,
       );
@@ -407,10 +453,26 @@ export class AgentRuntime {
     context: ModelContext,
   ): Promise<ReturnType<typeof DecisionSchema.parse>> {
     let last: unknown;
-    for (const provider of this.providers) {
+    for (const provider of task.providerName
+      ? this.providers.filter((p) => p.name === task.providerName)
+      : this.providers) {
       this.check(task);
       const start = performance.now();
       task.metrics.modelCalls++;
+      const record = {
+        provider: provider.name,
+        model: provider.name,
+        startedAt: Date.now(),
+        durationMs: 0,
+        inputTokens: null as number | null,
+        outputTokens: null as number | null,
+        estimatedCostUsd: null as number | null,
+        promptChars: undefined as number | undefined,
+        responseChars: undefined as number | undefined,
+        status: "error" as "success" | "error",
+        error: undefined as string | undefined,
+      };
+      (task.modelHistory ??= []).push(record);
       try {
         const signal = this.controls.get(task.id)!.abort.signal;
         const output = await abortable(
@@ -422,7 +484,22 @@ export class AgentRuntime {
           Number.isFinite(output.tokens) && output.tokens! > 0
             ? output.tokens!
             : 0;
+        record.model = output.model ?? provider.name;
+        record.inputTokens = Number.isFinite(output.inputTokens)
+          ? output.inputTokens!
+          : null;
+        record.outputTokens = Number.isFinite(output.outputTokens)
+          ? output.outputTokens!
+          : null;
+        record.estimatedCostUsd = Number.isFinite(output.estimatedCostUsd)
+          ? output.estimatedCostUsd!
+          : null;
+        record.promptChars = output.promptChars;
+        record.responseChars = output.responseChars;
         const decision = DecisionSchema.parse(output.decision);
+        task.metrics.schemaValidFirstAttempt =
+          (task.metrics.schemaValidFirstAttempt ?? 0) + 1;
+        record.status = "success";
         this.emit(task, "model_decision", {
           provider: provider.name,
           decision,
@@ -430,6 +507,12 @@ export class AgentRuntime {
         return decision;
       } catch (error) {
         last = error;
+        if (error instanceof z.ZodError) {
+          task.metrics.schemaFailures = (task.metrics.schemaFailures ?? 0) + 1;
+        }
+        record.error = String(
+          redact(error instanceof Error ? error.message : String(error)),
+        );
         this.emit(task, "provider_error", {
           provider: provider.name,
           error: String(
@@ -437,7 +520,9 @@ export class AgentRuntime {
           ),
         });
       } finally {
-        task.metrics.modelMs += performance.now() - start;
+        record.durationMs = performance.now() - start;
+        task.metrics.modelMs += record.durationMs;
+        this.emit(task, "model_call", { ...record });
       }
     }
     throw new Error(
@@ -556,6 +641,8 @@ export class AgentRuntime {
     if (this.controls.size)
       throw new Error("Previous process cleanup is still running");
     const parent = this.require(parentId);
+    if (parent.workspaceInfo)
+      throw new Error("Use changeset revert for isolated tasks");
     if (!parent.checkpoints.includes(checkpointId))
       throw new Error("Checkpoint does not belong to task");
     const now = Date.now();
@@ -598,6 +685,58 @@ export class AgentRuntime {
       this.status(task, "completed");
     });
     return this.public(task);
+  }
+  private toolsFor(task: Task): WorkspaceTools {
+    return this.taskTools.get(task.id) ?? this.tools;
+  }
+  private broker(task: Task): TaskWorkspaceBroker {
+    let broker = this.brokers.get(task.id);
+    if (!broker) {
+      broker = new TaskWorkspaceBroker(
+        task.workspace ?? this.workspace,
+        path.join(this.store.directory, "workspaces"),
+      );
+      this.brokers.set(task.id, broker);
+    }
+    return broker;
+  }
+  private changeTask(id: string): Task {
+    const task = this.require(id);
+    if (!terminal(task.status) || this.controls.has(id))
+      throw new Error(
+        "Wait for task completion and process cleanup before reviewing changes",
+      );
+    if (!task.workspaceInfo)
+      throw new Error("This task has no isolated changeset");
+    return task;
+  }
+  async changes(id: string): Promise<ChangeSet> {
+    return this.broker(this.changeTask(id)).changes(id);
+  }
+  async accept(id: string, digest: string): Promise<ChangeSet> {
+    this.assertIdle();
+    const task = this.changeTask(id);
+    if (task.status !== "completed")
+      throw new Error(
+        "Only independently verified completed tasks can be accepted",
+      );
+    const result = await this.broker(task).accept(id, digest);
+    this.emit(task, "changeset_accepted", { digest });
+    return result;
+  }
+  async discard(id: string, digest: string): Promise<ChangeSet> {
+    this.assertIdle();
+    const task = this.changeTask(id);
+    const result = await this.broker(task).discard(id, digest);
+    this.emit(task, "changeset_discarded", { digest });
+    return result;
+  }
+  async revert(id: string, digest: string): Promise<ChangeSet> {
+    this.assertIdle();
+    const task = this.changeTask(id);
+    const result = await this.broker(task).revert(id, digest);
+    this.emit(task, "changeset_reverted", { digest });
+    return result;
   }
   async wait(id: string): Promise<Task> {
     await this.controls.get(id)?.work;

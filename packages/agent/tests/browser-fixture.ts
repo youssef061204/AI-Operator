@@ -10,6 +10,7 @@ const server = await startRuntimeServer({
   dataDir: path.join(directory, "data"),
   port: 7788,
   token: "browser-fixture-token-".repeat(3),
+  isolate: false,
   origins: ["http://localhost:3010"],
   providers: [
     {

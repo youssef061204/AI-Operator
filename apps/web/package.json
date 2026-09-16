@@ -6,7 +6,8 @@
     "dev": "next dev -p 3000",
     "build": "next build",
     "start": "next start -p 3000",
-    "lint": "tsc -p tsconfig.json --noEmit"
+    "lint": "eslint app lib/runtime.ts",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
     "@operator-assist/shared": "workspace:*",
