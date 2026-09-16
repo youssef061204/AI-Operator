@@ -260,6 +260,13 @@ export class OllamaProvider implements Provider {
 
 export class GeminiProvider implements Provider {
   readonly name: string;
+  private readonly retryStats = {
+    requests: 0,
+    retries: 0,
+    rateLimited: 0,
+    serverErrors: 0,
+    persistentFailures: 0,
+  };
   constructor(
     private model: string,
     private apiKey: string,
@@ -271,6 +278,10 @@ export class GeminiProvider implements Provider {
     if (url.protocol !== "https:" || url.username || url.password)
       throw new Error("Gemini endpoint must be credential-free HTTPS");
     this.name = `gemini:${model}`;
+  }
+
+  stats(): Readonly<typeof this.retryStats> {
+    return { ...this.retryStats };
   }
 
   async decide(
@@ -298,8 +309,9 @@ export class GeminiProvider implements Provider {
       instruction:
         "Return exactly one JSON decision matching the requested action or finish shape. Do not include markdown or prose outside JSON.",
     });
-    const request = async (): Promise<Response> =>
-      await fetch(
+    const request = async (): Promise<Response> => {
+      this.retryStats.requests += 1;
+      return await fetch(
         `${this.endpoint.replace(/\/$/u, "")}/models/${encodeURIComponent(this.model)}:generateContent?key=${encodeURIComponent(this.apiKey)}`,
         {
           method: "POST",
@@ -317,9 +329,13 @@ export class GeminiProvider implements Provider {
           }),
         },
       );
+    };
     let response = await request();
-    for (let retry = 0; !response.ok && retry < 2; retry += 1) {
-      if (response.status !== 429 && response.status !== 503) break;
+    const maxRetries = 3;
+    for (let retry = 0; !response.ok && retry < maxRetries; retry += 1) {
+      if (response.status !== 429 && response.status < 500) break;
+      if (response.status === 429) this.retryStats.rateLimited += 1;
+      else this.retryStats.serverErrors += 1;
       const detail = await response.clone().text();
       const retryAfterValue = response.headers.get("retry-after");
       const retryAfterHeader = retryAfterValue
@@ -330,25 +346,35 @@ export class GeminiProvider implements Provider {
         ? Number(retryMatch[1]) *
           (retryMatch[2]?.toLowerCase() === "ms" ? 0.001 : 1)
         : Number.NaN;
-      const delaySeconds = Number.isFinite(retryAfterHeader)
+      const serverDelaySeconds = Number.isFinite(retryAfterHeader)
         ? retryAfterHeader
         : Number.isFinite(retryAfterMessage)
-          ? retryAfterMessage + 0.25
-          : 2 ** retry;
+          ? retryAfterMessage
+          : 0;
+      const exponentialSeconds = Math.min(8, 2 ** retry);
+      const jitterSeconds = Math.random() * exponentialSeconds * 0.25;
+      const delaySeconds = Math.min(
+        60,
+        Math.max(serverDelaySeconds, exponentialSeconds) + jitterSeconds,
+      );
+      this.retryStats.retries += 1;
       await new Promise<void>((resolve, reject) => {
-        const timer = setTimeout(resolve, Math.min(60000, delaySeconds * 1000));
-        signal.addEventListener(
-          "abort",
-          () => {
-            clearTimeout(timer);
-            reject(signal.reason ?? new Error("Gemini request aborted"));
-          },
-          { once: true },
-        );
+        const onAbort = () => {
+          clearTimeout(timer);
+          reject(signal.reason ?? new Error("Gemini request aborted"));
+        };
+        const timer = setTimeout(() => {
+          signal.removeEventListener("abort", onAbort);
+          resolve();
+        }, delaySeconds * 1000);
+        signal.addEventListener("abort", onAbort, { once: true });
       });
       response = await request();
     }
     if (!response.ok) {
+      if (response.status === 429) this.retryStats.rateLimited += 1;
+      else if (response.status >= 500) this.retryStats.serverErrors += 1;
+      this.retryStats.persistentFailures += 1;
       const detail = (await response.text())
         .slice(0, 500)
         .replace(/[?&]key=[^&\s]+/gu, "?key=[REDACTED]");

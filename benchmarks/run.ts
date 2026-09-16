@@ -9,6 +9,13 @@ import { TaskStore } from "../packages/agent/src/runtime/store.js";
 import { GeminiProvider } from "../packages/agent/src/runtime/providers.js";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+if (!process.env.GEMINI_API_KEY) {
+  try {
+    process.loadEnvFile(path.join(root, ".env"));
+  } catch {
+    // The provider reports a clear missing-key error when no local env exists.
+  }
+}
 const argv = new Set(process.argv.slice(2));
 const value = (name: string) => {
   const i = process.argv.indexOf(name);
@@ -298,7 +305,13 @@ async function live(): Promise<void> {
         agentStatus: completed.status,
         elapsedMs: performance.now() - started,
         metrics: completed.metrics,
+        steps: completed.steps,
+        error: completed.error,
         modelHistory: completed.modelHistory ?? [],
+        providerStats: provider.stats(),
+        permissionDenials: completed.observations.filter((observation) =>
+          /denied|policy/iu.test(String(observation.error ?? "")),
+        ).length,
         filesModified: passed ? task.editable.length : null,
       });
     } catch (error) {
@@ -318,16 +331,154 @@ async function live(): Promise<void> {
     .map((x: any) => x.elapsedMs)
     .filter(Number.isFinite)
     .sort((a: number, b: number) => a - b);
+  const percentile = (values: number[], fraction: number) =>
+    values.length
+      ? values[
+          Math.min(values.length - 1, Math.ceil(values.length * fraction) - 1)
+        ]
+      : null;
+  const groups = (field: "category" | "difficulty") =>
+    Object.fromEntries(
+      [...new Set(results.map((result: any) => result[field]))]
+        .filter(Boolean)
+        .sort()
+        .map((name) => {
+          const subset = results.filter(
+            (result: any) => result[field] === name,
+          );
+          const passed = subset.filter((result: any) => result.passed).length;
+          return [
+            name,
+            {
+              attempted: subset.length,
+              passed,
+              failed: subset.length - passed,
+              successRate: passed / subset.length,
+            },
+          ];
+        }),
+    );
+  const histories = results.flatMap((result: any) => result.modelHistory ?? []);
+  const successfulCalls = histories.filter(
+    (call: any) => call.status === "success",
+  );
+  const inputTokens = successfulCalls.reduce(
+    (sum: number, call: any) => sum + (call.inputTokens ?? 0),
+    0,
+  );
+  const outputTokens = successfulCalls.reduce(
+    (sum: number, call: any) => sum + (call.outputTokens ?? 0),
+    0,
+  );
+  const estimatedCostUsd = successfulCalls.reduce(
+    (sum: number, call: any) => sum + (call.estimatedCostUsd ?? 0),
+    0,
+  );
+  const attempted = results.length;
+  const passed = results.filter((result: any) => result.passed).length;
+  const modelCalls = results.reduce(
+    (sum: number, result: any) => sum + (result.metrics?.modelCalls ?? 0),
+    0,
+  );
+  const schemaValidFirstAttempt = results.reduce(
+    (sum: number, result: any) =>
+      sum + (result.metrics?.schemaValidFirstAttempt ?? 0),
+    0,
+  );
+  const provider = results.reduce(
+    (totals: any, result: any) => {
+      for (const key of Object.keys(totals))
+        totals[key] += result.providerStats?.[key] ?? 0;
+      return totals;
+    },
+    {
+      requests: 0,
+      retries: 0,
+      rateLimited: 0,
+      serverErrors: 0,
+      persistentFailures: 0,
+    },
+  );
+  const failureBreakdown = {
+    graderFailures: results.filter((result: any) => !result.passed).length,
+    completedButGraderFailed: results.filter(
+      (result: any) => !result.passed && result.agentStatus === "completed",
+    ).length,
+    failedAgentRuns: results.filter(
+      (result: any) => result.agentStatus === "failed",
+    ).length,
+    providerFailures: histories.filter(
+      (call: any) =>
+        call.status === "error" &&
+        /Gemini HTTP|fetch failed/iu.test(call.error ?? ""),
+    ).length,
+    timeouts: results.filter((result: any) =>
+      /deadline|timed out|timeout/iu.test(result.error ?? ""),
+    ).length,
+    stepLimitFailures: results.filter((result: any) =>
+      /step/iu.test(result.error ?? ""),
+    ).length,
+    repeatedActionFailures: results.filter((result: any) =>
+      /repeat/iu.test(result.error ?? ""),
+    ).length,
+    schemaFailures: results.reduce(
+      (sum: number, result: any) => sum + (result.metrics?.schemaFailures ?? 0),
+      0,
+    ),
+    invalidResponseCalls: histories.filter((call: any) =>
+      /Invalid or truncated/iu.test(call.error ?? ""),
+    ).length,
+    tasksWithInvalidResponses: results.filter((result: any) =>
+      /Invalid or truncated/iu.test(result.error ?? ""),
+    ).length,
+    policyDeniedTasks: results.filter((result: any) =>
+      /Policy denies/iu.test(result.error ?? ""),
+    ).length,
+  };
   const output = {
     kind: "live-coding-benchmark",
     generatedAt: new Date().toISOString(),
     provider: "gemini",
     model,
-    attempted: results.length,
-    passed: results.filter((x) => x.passed).length,
-    successRate: results.filter((x) => x.passed).length / results.length,
-    medianTaskMs: times.length ? times[Math.floor(times.length / 2)] : null,
-    estimatedCostUsd: null,
+    attempted,
+    passed,
+    failed: attempted - passed,
+    successRate: passed / attempted,
+    successByCategory: groups("category"),
+    successByDifficulty: groups("difficulty"),
+    failureBreakdown,
+    schema: {
+      modelCalls,
+      validFirstAttempt: schemaValidFirstAttempt,
+      validFirstAttemptRate: modelCalls
+        ? schemaValidFirstAttempt / modelCalls
+        : null,
+    },
+    latencyMs: {
+      median: percentile(times, 0.5),
+      p95: percentile(times, 0.95),
+    },
+    averageSteps:
+      results.reduce(
+        (sum: number, result: any) => sum + (result.steps ?? 0),
+        0,
+      ) / attempted,
+    tokens: {
+      totalInput: inputTokens,
+      totalOutput: outputTokens,
+      averageInputPerTask: inputTokens / attempted,
+      averageOutputPerTask: outputTokens / attempted,
+    },
+    costUsd: {
+      estimatedTotal: estimatedCostUsd,
+      perAttemptedTask: estimatedCostUsd / attempted,
+      perSuccessfulTask: passed ? estimatedCostUsd / passed : null,
+    },
+    providerTelemetry: provider,
+    permissionViolations: results.reduce(
+      (sum: number, result: any) => sum + (result.permissionDenials ?? 0),
+      0,
+    ),
     results,
   };
   await mkdir(path.join(root, "artifacts/evaluation"), { recursive: true });

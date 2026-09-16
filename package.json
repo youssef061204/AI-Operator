@@ -12,6 +12,7 @@
     "test": "pnpm --filter @operator-assist/agent test",
     "evaluate": "pnpm --filter @operator-assist/agent evaluate",
     "benchmark:integrity": "pnpm --filter @operator-assist/agent exec tsx ../../benchmarks/run.ts --integrity",
+    "benchmark": "pnpm --filter @operator-assist/agent exec tsx ../../benchmarks/run.ts",
     "benchmark:live": "pnpm --filter @operator-assist/agent exec tsx ../../benchmarks/run.ts",
     "cli": "pnpm --filter @operator-assist/agent cli",
     "test:browser": "playwright test",

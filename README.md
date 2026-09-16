@@ -21,15 +21,16 @@ flowchart LR
 
 ## Measured evidence
 
-| Evidence                   |                                           Result | Meaning                                                                                    |
-| -------------------------- | -----------------------------------------------: | ------------------------------------------------------------------------------------------ |
-| Runtime safety evaluation  | 42/42 expected outcomes, 0 permission violations | 14 deterministic scenarios repeated 3 times with real tools; not an LLM success rate       |
-| Coding benchmark integrity |                                      50/50 tasks | Every known-bad fixture fails and every reference solution passes its independent grader   |
-| Automated tests            |               31 cases, 0 failures in final pass | 28 passed; Docker daemon and Windows symlink privilege caused 3 explicit environment skips |
-| Docker security checks     |                                       2/2 passed | Network disabled and timed-out containers cleaned up                                       |
-| Dependency audit           |                                     0 advisories | Full pnpm graph at the recorded verification point                                         |
+| Evidence                   |                                           Result | Meaning                                                                                  |
+| -------------------------- | -----------------------------------------------: | ---------------------------------------------------------------------------------------- |
+| Runtime safety evaluation  | 42/42 expected outcomes, 0 permission violations | 14 deterministic scenarios repeated 3 times with real tools; not an LLM success rate     |
+| Coding benchmark integrity |                                      50/50 tasks | Every known-bad fixture fails and every reference solution passes its independent grader |
+| Live Gemini capability     |                              33/50 tasks (66.0%) | One frozen run of `gemini-3.8-flash`; independent Docker graders                         |
+| Automated tests            |               32 cases, 0 failures in final pass | 31 passed; Windows symlink privilege caused 1 explicit environment skip                  |
+| Docker security checks     |                                       2/2 passed | Network disabled and timed-out containers cleaned up                                     |
+| Dependency audit           |                                     0 advisories | Full pnpm graph at the recorded verification point                                       |
 
-Live Gemini capability results are reported only after a real run. Reference-solution integrity is never presented as model performance.
+The live run used 96,203 input tokens and 13,550 output tokens, with 12.19 s median and 50.90 s p95 task latency. Estimated API cost was $0.1230 total. Reference-solution integrity is reported separately from model performance.
 
 ## Quickstart
 
@@ -69,7 +70,7 @@ pnpm test
 pnpm test:browser
 pnpm evaluate
 pnpm benchmark:integrity
-pnpm benchmark:live -- --model gemini-3.8-flash --limit 50
+pnpm benchmark -- --model gemini-3.8-flash --limit 50
 pnpm build
 pnpm audit
 ```

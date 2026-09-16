@@ -142,3 +142,45 @@ test("Gemini adapter sends structured JSON requests and records usage", async ()
     globalThis.fetch = originalFetch;
   }
 });
+
+test("Gemini adapter bounds and reports transient retries", async () => {
+  let requests = 0;
+  const originalFetch = globalThis.fetch;
+  const originalRandom = Math.random;
+  Math.random = () => 0;
+  globalThis.fetch = async () => {
+    requests += 1;
+    if (requests === 1) return new Response("unavailable", { status: 503 });
+    return new Response(
+      JSON.stringify({
+        candidates: [
+          {
+            content: {
+              parts: [{ text: '{"kind":"finish","summary":"fixture"}' }],
+            },
+            finishReason: "STOP",
+          },
+        ],
+        usageMetadata: { promptTokenCount: 2, candidatesTokenCount: 1 },
+      }),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  };
+  const provider = new GeminiProvider(
+    "gemini-test",
+    "test-key-that-is-long-enough",
+  );
+  try {
+    await provider.decide(context, new AbortController().signal);
+    assert.deepEqual(provider.stats(), {
+      requests: 2,
+      retries: 1,
+      rateLimited: 0,
+      serverErrors: 1,
+      persistentFailures: 0,
+    });
+  } finally {
+    globalThis.fetch = originalFetch;
+    Math.random = originalRandom;
+  }
+});

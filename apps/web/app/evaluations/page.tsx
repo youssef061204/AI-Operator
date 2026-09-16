@@ -39,11 +39,13 @@ export default function EvaluationsPage() {
       {records.map(({ name, result }) => (
         <section className="panel grid" key={name}>
           <h2>
-            {name.includes("benchmark")
-              ? "Live coding benchmark"
-              : name.includes("latest")
-                ? "Runtime safety evaluation"
-                : name}
+            {name.includes("live-benchmark")
+              ? "Live Gemini Coding Capability"
+              : name.includes("benchmark-integrity")
+                ? "Coding Benchmark Integrity"
+                : name.includes("latest")
+                  ? "Deterministic Runtime/Safety Evaluation"
+                  : name}
           </h2>
           <p className="muted">{name}</p>
           <pre>{JSON.stringify(result, null, 2)}</pre>

@@ -1,0 +1,4185 @@
+{
+  "kind": "live-coding-benchmark",
+  "generatedAt": "2026-09-16T19:21:25.541Z",
+  "provider": "gemini",
+  "model": "gemini-3.8-flash",
+  "attempted": 50,
+  "passed": 33,
+  "failed": 17,
+  "successRate": 0.66,
+  "successByCategory": {
+    "algorithms": {
+      "attempted": 5,
+      "passed": 5,
+      "failed": 0,
+      "successRate": 1
+    },
+    "api": {
+      "attempted": 5,
+      "passed": 4,
+      "failed": 1,
+      "successRate": 0.8
+    },
+    "async": {
+      "attempted": 5,
+      "passed": 3,
+      "failed": 2,
+      "successRate": 0.6
+    },
+    "cross-file": {
+      "attempted": 5,
+      "passed": 4,
+      "failed": 1,
+      "successRate": 0.8
+    },
+    "data": {
+      "attempted": 5,
+      "passed": 5,
+      "failed": 0,
+      "successRate": 1
+    },
+    "features": {
+      "attempted": 5,
+      "passed": 3,
+      "failed": 2,
+      "successRate": 0.6
+    },
+    "parsing": {
+      "attempted": 5,
+      "passed": 4,
+      "failed": 1,
+      "successRate": 0.8
+    },
+    "typescript": {
+      "attempted": 5,
+      "passed": 0,
+      "failed": 5,
+      "successRate": 0
+    },
+    "ui-state": {
+      "attempted": 5,
+      "passed": 4,
+      "failed": 1,
+      "successRate": 0.8
+    },
+    "validation": {
+      "attempted": 5,
+      "passed": 1,
+      "failed": 4,
+      "successRate": 0.2
+    }
+  },
+  "successByDifficulty": {
+    "easy": {
+      "attempted": 35,
+      "passed": 26,
+      "failed": 9,
+      "successRate": 0.7428571428571429
+    },
+    "medium": {
+      "attempted": 15,
+      "passed": 7,
+      "failed": 8,
+      "successRate": 0.4666666666666667
+    }
+  },
+  "failureBreakdown": {
+    "graderFailures": 17,
+    "providerFailures": 0,
+    "timeouts": 0,
+    "stepLimitFailures": 0,
+    "repeatedActionFailures": 0,
+    "schemaFailures": 0,
+    "completedButGraderFailed": 5,
+    "failedAgentRuns": 12,
+    "invalidResponseCalls": 51,
+    "tasksWithInvalidResponses": 10,
+    "policyDeniedTasks": 2
+  },
+  "schema": {
+    "modelCalls": 212,
+    "validFirstAttempt": 161,
+    "validFirstAttemptRate": 0.7594339622641509
+  },
+  "latencyMs": {
+    "median": 12193.30739999999,
+    "p95": 50898.93400000001
+  },
+  "averageSteps": 4.24,
+  "tokens": {
+    "totalInput": 96203,
+    "totalOutput": 13550,
+    "averageInputPerTask": 1924.06,
+    "averageOutputPerTask": 271
+  },
+  "costUsd": {
+    "estimatedTotal": 0.12296475000000001,
+    "perAttemptedTask": 0.0024592950000000002,
+    "perSuccessfulTask": 0.003726204545454546
+  },
+  "providerTelemetry": {
+    "requests": 212,
+    "retries": 0,
+    "rateLimited": 0,
+    "serverErrors": 0,
+    "persistentFailures": 0
+  },
+  "permissionViolations": 2,
+  "results": [
+    {
+      "id": "algorithms-stable-dedup",
+      "category": "algorithms",
+      "difficulty": "easy",
+      "passed": true,
+      "agentStatus": "completed",
+      "elapsedMs": 6389.5214,
+      "metrics": {
+        "modelCalls": 3,
+        "toolCalls": 3,
+        "toolErrors": 0,
+        "modelMs": 5893.2796,
+        "toolMs": 50.70440000000008,
+        "tokens": 1958,
+        "schemaValidFirstAttempt": 3,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 3,
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585398379,
+          "durationMs": 1887.9525,
+          "inputTokens": 392,
+          "outputTokens": 62,
+          "estimatedCostUsd": 0.0005265,
+          "promptChars": 464,
+          "responseChars": 285,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585400289,
+          "durationMs": 2801.8635,
+          "inputTokens": 538,
+          "outputTokens": 136,
+          "estimatedCostUsd": 0.0009135,
+          "promptChars": 844,
+          "responseChars": 407,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585403113,
+          "durationMs": 1203.4636,
+          "inputTokens": 801,
+          "outputTokens": 29,
+          "estimatedCostUsd": 0.0007095,
+          "promptChars": 1260,
+          "responseChars": 137,
+          "status": "success"
+        }
+      ],
+      "providerStats": {
+        "requests": 3,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 0,
+      "filesModified": 1
+    },
+    {
+      "id": "algorithms-binary-search",
+      "category": "algorithms",
+      "difficulty": "easy",
+      "passed": true,
+      "agentStatus": "completed",
+      "elapsedMs": 9793.014200000001,
+      "metrics": {
+        "modelCalls": 3,
+        "toolCalls": 3,
+        "toolErrors": 0,
+        "modelMs": 9441.048199999997,
+        "toolMs": 44.067300000000614,
+        "tokens": 2205,
+        "schemaValidFirstAttempt": 3,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 3,
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585404775,
+          "durationMs": 1893.6040999999996,
+          "inputTokens": 399,
+          "outputTokens": 53,
+          "estimatedCostUsd": 0.000498,
+          "promptChars": 490,
+          "responseChars": 219,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585406683,
+          "durationMs": 5827.375899999999,
+          "inputTokens": 530,
+          "outputTokens": 294,
+          "estimatedCostUsd": 0.0015,
+          "promptChars": 818,
+          "responseChars": 720,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585412533,
+          "durationMs": 1720.0681999999997,
+          "inputTokens": 899,
+          "outputTokens": 30,
+          "estimatedCostUsd": 0.00078675,
+          "promptChars": 1495,
+          "responseChars": 157,
+          "status": "success"
+        }
+      ],
+      "providerStats": {
+        "requests": 3,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 0,
+      "filesModified": 1
+    },
+    {
+      "id": "algorithms-intervals",
+      "category": "algorithms",
+      "difficulty": "easy",
+      "passed": true,
+      "agentStatus": "completed",
+      "elapsedMs": 15221.5697,
+      "metrics": {
+        "modelCalls": 4,
+        "toolCalls": 3,
+        "toolErrors": 0,
+        "modelMs": 14849.4715,
+        "toolMs": 35.970799999999144,
+        "tokens": 2279,
+        "schemaValidFirstAttempt": 3,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 4,
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585414578,
+          "durationMs": 1409.3594000000012,
+          "inputTokens": 392,
+          "outputTokens": 62,
+          "estimatedCostUsd": 0.0005265,
+          "promptChars": 481,
+          "responseChars": 281,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789585416000,
+          "durationMs": 6442.746999999999,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585422450,
+          "durationMs": 4516.434599999997,
+          "inputTokens": 530,
+          "outputTokens": 303,
+          "estimatedCostUsd": 0.00153375,
+          "promptChars": 898,
+          "responseChars": 799,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585426990,
+          "durationMs": 2480.930500000002,
+          "inputTokens": 959,
+          "outputTokens": 33,
+          "estimatedCostUsd": 0.000843,
+          "promptChars": 1723,
+          "responseChars": 191,
+          "status": "success"
+        }
+      ],
+      "providerStats": {
+        "requests": 4,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 0,
+      "filesModified": 1
+    },
+    {
+      "id": "algorithms-chunks",
+      "category": "algorithms",
+      "difficulty": "easy",
+      "passed": true,
+      "agentStatus": "completed",
+      "elapsedMs": 8320.857399999997,
+      "metrics": {
+        "modelCalls": 4,
+        "toolCalls": 4,
+        "toolErrors": 0,
+        "modelMs": 7929.0538000000015,
+        "toolMs": 43.80829999999696,
+        "tokens": 2736,
+        "schemaValidFirstAttempt": 4,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 4,
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585429810,
+          "durationMs": 908.2376000000004,
+          "inputTokens": 399,
+          "outputTokens": 52,
+          "estimatedCostUsd": 0.00049425,
+          "promptChars": 498,
+          "responseChars": 225,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585430731,
+          "durationMs": 1508.2909,
+          "inputTokens": 526,
+          "outputTokens": 45,
+          "estimatedCostUsd": 0.00056325,
+          "promptChars": 821,
+          "responseChars": 220,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585432257,
+          "durationMs": 3899.0503000000026,
+          "inputTokens": 555,
+          "outputTokens": 214,
+          "estimatedCostUsd": 0.00121875,
+          "promptChars": 924,
+          "responseChars": 579,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585436182,
+          "durationMs": 1613.4749999999985,
+          "inputTokens": 912,
+          "outputTokens": 33,
+          "estimatedCostUsd": 0.00080775,
+          "promptChars": 1581,
+          "responseChars": 167,
+          "status": "success"
+        }
+      ],
+      "providerStats": {
+        "requests": 4,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 0,
+      "filesModified": 1
+    },
+    {
+      "id": "algorithms-maximum",
+      "category": "algorithms",
+      "difficulty": "easy",
+      "passed": true,
+      "agentStatus": "completed",
+      "elapsedMs": 6097.320099999997,
+      "metrics": {
+        "modelCalls": 3,
+        "toolCalls": 3,
+        "toolErrors": 0,
+        "modelMs": 5734.6145999999935,
+        "toolMs": 43.122199999997974,
+        "tokens": 1951,
+        "schemaValidFirstAttempt": 3,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 3,
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585438139,
+          "durationMs": 991.6327000000019,
+          "inputTokens": 395,
+          "outputTokens": 57,
+          "estimatedCostUsd": 0.00051,
+          "promptChars": 488,
+          "responseChars": 247,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585439144,
+          "durationMs": 3052.427899999995,
+          "inputTokens": 521,
+          "outputTokens": 146,
+          "estimatedCostUsd": 0.00093825,
+          "promptChars": 817,
+          "responseChars": 431,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585442218,
+          "durationMs": 1690.5539999999964,
+          "inputTokens": 793,
+          "outputTokens": 39,
+          "estimatedCostUsd": 0.000741,
+          "promptChars": 1284,
+          "responseChars": 181,
+          "status": "success"
+        }
+      ],
+      "providerStats": {
+        "requests": 3,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 0,
+      "filesModified": 1
+    },
+    {
+      "id": "parsing-csv",
+      "category": "parsing",
+      "difficulty": "easy",
+      "passed": true,
+      "agentStatus": "completed",
+      "elapsedMs": 41535.202399999995,
+      "metrics": {
+        "modelCalls": 6,
+        "toolCalls": 4,
+        "toolErrors": 0,
+        "modelMs": 41098.24070000001,
+        "toolMs": 69.854900000013,
+        "tokens": 3085,
+        "schemaValidFirstAttempt": 4,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 6,
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585444245,
+          "durationMs": 1148.9478000000017,
+          "inputTokens": 395,
+          "outputTokens": 57,
+          "estimatedCostUsd": 0.00051,
+          "promptChars": 481,
+          "responseChars": 261,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585445408,
+          "durationMs": 7046.678899999999,
+          "inputTokens": 524,
+          "outputTokens": 87,
+          "estimatedCostUsd": 0.00071925,
+          "promptChars": 816,
+          "responseChars": 248,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789585452473,
+          "durationMs": 14393.966200000003,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789585466880,
+          "durationMs": 11071.0922,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585477959,
+          "durationMs": 4395.4274000000005,
+          "inputTokens": 586,
+          "outputTokens": 345,
+          "estimatedCostUsd": 0.00173325,
+          "promptChars": 1062,
+          "responseChars": 956,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585482384,
+          "durationMs": 3042.1282000000065,
+          "inputTokens": 1063,
+          "outputTokens": 28,
+          "estimatedCostUsd": 0.00090225,
+          "promptChars": 2075,
+          "responseChars": 149,
+          "status": "success"
+        }
+      ],
+      "providerStats": {
+        "requests": 6,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 0,
+      "filesModified": 1
+    },
+    {
+      "id": "parsing-escaped-delimiter",
+      "category": "parsing",
+      "difficulty": "easy",
+      "passed": false,
+      "agentStatus": "failed",
+      "elapsedMs": 81039.377,
+      "metrics": {
+        "modelCalls": 7,
+        "toolCalls": 3,
+        "toolErrors": 0,
+        "modelMs": 80646.53399999993,
+        "toolMs": 21.798099999999977,
+        "tokens": 1595,
+        "schemaValidFirstAttempt": 3,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 7,
+      "error": "All providers failed: Invalid or truncated Gemini response",
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585485794,
+          "durationMs": 1265.086099999986,
+          "inputTokens": 403,
+          "outputTokens": 41,
+          "estimatedCostUsd": 0.000456,
+          "promptChars": 517,
+          "responseChars": 164,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585487073,
+          "durationMs": 4088.339699999997,
+          "inputTokens": 513,
+          "outputTokens": 35,
+          "estimatedCostUsd": 0.000516,
+          "promptChars": 758,
+          "responseChars": 137,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789585491179,
+          "durationMs": 15072.536599999992,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585506258,
+          "durationMs": 11420.682199999996,
+          "inputTokens": 564,
+          "outputTokens": 39,
+          "estimatedCostUsd": 0.00056925,
+          "promptChars": 955,
+          "responseChars": 150,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789585517704,
+          "durationMs": 26883.221499999985,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789585544596,
+          "durationMs": 14559.57759999999,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789585559166,
+          "durationMs": 7357.090299999982,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        }
+      ],
+      "providerStats": {
+        "requests": 7,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 0,
+      "filesModified": null
+    },
+    {
+      "id": "parsing-query-values",
+      "category": "parsing",
+      "difficulty": "easy",
+      "passed": true,
+      "agentStatus": "completed",
+      "elapsedMs": 8508.35030000002,
+      "metrics": {
+        "modelCalls": 3,
+        "toolCalls": 3,
+        "toolErrors": 0,
+        "modelMs": 8150.3799,
+        "toolMs": 39.58170000000973,
+        "tokens": 2000,
+        "schemaValidFirstAttempt": 3,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 3,
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585566843,
+          "durationMs": 3159.230199999991,
+          "inputTokens": 398,
+          "outputTokens": 50,
+          "estimatedCostUsd": 0.000486,
+          "promptChars": 497,
+          "responseChars": 210,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585570017,
+          "durationMs": 3269.7742000000144,
+          "inputTokens": 520,
+          "outputTokens": 170,
+          "estimatedCostUsd": 0.0010275,
+          "promptChars": 793,
+          "responseChars": 478,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585573308,
+          "durationMs": 1721.3754999999946,
+          "inputTokens": 817,
+          "outputTokens": 45,
+          "estimatedCostUsd": 0.0007815,
+          "promptChars": 1309,
+          "responseChars": 201,
+          "status": "success"
+        }
+      ],
+      "providerStats": {
+        "requests": 3,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 0,
+      "filesModified": 1
+    },
+    {
+      "id": "parsing-unicode",
+      "category": "parsing",
+      "difficulty": "easy",
+      "passed": true,
+      "agentStatus": "completed",
+      "elapsedMs": 37498.2255,
+      "metrics": {
+        "modelCalls": 5,
+        "toolCalls": 3,
+        "toolErrors": 0,
+        "modelMs": 37092.50349999999,
+        "toolMs": 53.850199999986216,
+        "tokens": 2014,
+        "schemaValidFirstAttempt": 3,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 5,
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585575360,
+          "durationMs": 1095.456199999986,
+          "inputTokens": 397,
+          "outputTokens": 52,
+          "estimatedCostUsd": 0.00049275,
+          "promptChars": 494,
+          "responseChars": 244,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789585576469,
+          "durationMs": 10398.648199999996,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789585586873,
+          "durationMs": 16523.502300000022,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585603404,
+          "durationMs": 5769.279999999999,
+          "inputTokens": 551,
+          "outputTokens": 151,
+          "estimatedCostUsd": 0.0009795,
+          "promptChars": 965,
+          "responseChars": 439,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585609202,
+          "durationMs": 3305.616799999989,
+          "inputTokens": 829,
+          "outputTokens": 34,
+          "estimatedCostUsd": 0.00074925,
+          "promptChars": 1425,
+          "responseChars": 177,
+          "status": "success"
+        }
+      ],
+      "providerStats": {
+        "requests": 5,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 0,
+      "filesModified": 1
+    },
+    {
+      "id": "parsing-newlines",
+      "category": "parsing",
+      "difficulty": "easy",
+      "passed": true,
+      "agentStatus": "completed",
+      "elapsedMs": 12193.30739999999,
+      "metrics": {
+        "modelCalls": 4,
+        "toolCalls": 4,
+        "toolErrors": 0,
+        "modelMs": 11778.666200000036,
+        "toolMs": 60.932399999990594,
+        "tokens": 2589,
+        "schemaValidFirstAttempt": 4,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 4,
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585612871,
+          "durationMs": 1071.8329000000085,
+          "inputTokens": 399,
+          "outputTokens": 67,
+          "estimatedCostUsd": 0.0005505,
+          "promptChars": 505,
+          "responseChars": 278,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585613956,
+          "durationMs": 2143.791100000002,
+          "inputTokens": 530,
+          "outputTokens": 39,
+          "estimatedCostUsd": 0.00054375,
+          "promptChars": 861,
+          "responseChars": 164,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585616118,
+          "durationMs": 6626.025000000023,
+          "inputTokens": 545,
+          "outputTokens": 143,
+          "estimatedCostUsd": 0.000945,
+          "promptChars": 887,
+          "responseChars": 400,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585622769,
+          "durationMs": 1937.017200000002,
+          "inputTokens": 821,
+          "outputTokens": 45,
+          "estimatedCostUsd": 0.0007845,
+          "promptChars": 1371,
+          "responseChars": 162,
+          "status": "success"
+        }
+      ],
+      "providerStats": {
+        "requests": 4,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 0,
+      "filesModified": 1
+    },
+    {
+      "id": "validation-missing-values",
+      "category": "validation",
+      "difficulty": "easy",
+      "passed": true,
+      "agentStatus": "completed",
+      "elapsedMs": 9814.343699999998,
+      "metrics": {
+        "modelCalls": 3,
+        "toolCalls": 3,
+        "toolErrors": 0,
+        "modelMs": 9450.904999999999,
+        "toolMs": 44.765999999974156,
+        "tokens": 1949,
+        "schemaValidFirstAttempt": 3,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 3,
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585625075,
+          "durationMs": 3361.1251000000047,
+          "inputTokens": 400,
+          "outputTokens": 50,
+          "estimatedCostUsd": 0.0004875,
+          "promptChars": 500,
+          "responseChars": 224,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585628451,
+          "durationMs": 3305.5985999999975,
+          "inputTokens": 515,
+          "outputTokens": 152,
+          "estimatedCostUsd": 0.00095625,
+          "promptChars": 779,
+          "responseChars": 396,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585631779,
+          "durationMs": 2784.1812999999966,
+          "inputTokens": 791,
+          "outputTokens": 41,
+          "estimatedCostUsd": 0.000747,
+          "promptChars": 1237,
+          "responseChars": 178,
+          "status": "success"
+        }
+      ],
+      "providerStats": {
+        "requests": 3,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 0,
+      "filesModified": 1
+    },
+    {
+      "id": "validation-bounds",
+      "category": "validation",
+      "difficulty": "easy",
+      "passed": false,
+      "agentStatus": "failed",
+      "elapsedMs": 38325.98489999998,
+      "metrics": {
+        "modelCalls": 6,
+        "toolCalls": 2,
+        "toolErrors": 0,
+        "modelMs": 37875.321400000044,
+        "toolMs": 13.548099999985425,
+        "tokens": 1042,
+        "schemaValidFirstAttempt": 2,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 6,
+      "error": "All providers failed: Invalid or truncated Gemini response",
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585634898,
+          "durationMs": 1070.540800000017,
+          "inputTokens": 393,
+          "outputTokens": 57,
+          "estimatedCostUsd": 0.0005085,
+          "promptChars": 471,
+          "responseChars": 261,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789585635982,
+          "durationMs": 7348.961700000014,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585643337,
+          "durationMs": 3270.6799000000174,
+          "inputTokens": 543,
+          "outputTokens": 49,
+          "estimatedCostUsd": 0.000591,
+          "promptChars": 885,
+          "responseChars": 232,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789585646627,
+          "durationMs": 11236.683300000004,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789585657872,
+          "durationMs": 7566.221200000029,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789585665446,
+          "durationMs": 7382.234499999962,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        }
+      ],
+      "providerStats": {
+        "requests": 6,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 0,
+      "filesModified": null
+    },
+    {
+      "id": "validation-nested",
+      "category": "validation",
+      "difficulty": "easy",
+      "passed": false,
+      "agentStatus": "completed",
+      "elapsedMs": 22163.030299999984,
+      "metrics": {
+        "modelCalls": 5,
+        "toolCalls": 4,
+        "toolErrors": 0,
+        "modelMs": 21758.6461999999,
+        "toolMs": 43.42309999995632,
+        "tokens": 2858,
+        "schemaValidFirstAttempt": 4,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 5,
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585673235,
+          "durationMs": 1242.0350999999791,
+          "inputTokens": 407,
+          "outputTokens": 66,
+          "estimatedCostUsd": 0.00055275,
+          "promptChars": 537,
+          "responseChars": 305,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585674490,
+          "durationMs": 2712.0020999999833,
+          "inputTokens": 543,
+          "outputTokens": 43,
+          "estimatedCostUsd": 0.0005685,
+          "promptChars": 916,
+          "responseChars": 211,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789585677219,
+          "durationMs": 6944.973399999959,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585684171,
+          "durationMs": 5856.478000000003,
+          "inputTokens": 576,
+          "outputTokens": 230,
+          "estimatedCostUsd": 0.0012945,
+          "promptChars": 1032,
+          "responseChars": 669,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585690053,
+          "durationMs": 5003.157599999977,
+          "inputTokens": 942,
+          "outputTokens": 51,
+          "estimatedCostUsd": 0.00089775,
+          "promptChars": 1735,
+          "responseChars": 230,
+          "status": "success"
+        }
+      ],
+      "providerStats": {
+        "requests": 5,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 0,
+      "filesModified": null
+    },
+    {
+      "id": "validation-unknown-keys",
+      "category": "validation",
+      "difficulty": "easy",
+      "passed": false,
+      "agentStatus": "failed",
+      "elapsedMs": 47763.96860000002,
+      "metrics": {
+        "modelCalls": 5,
+        "toolCalls": 2,
+        "toolErrors": 0,
+        "modelMs": 47384.79710000008,
+        "toolMs": 11.815799999982119,
+        "tokens": 1034,
+        "schemaValidFirstAttempt": 2,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 5,
+      "error": "All providers failed: Invalid or truncated Gemini response",
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585695407,
+          "durationMs": 1067.3409000000102,
+          "inputTokens": 396,
+          "outputTokens": 61,
+          "estimatedCostUsd": 0.00052575,
+          "promptChars": 481,
+          "responseChars": 266,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585696487,
+          "durationMs": 6039.571800000034,
+          "inputTokens": 526,
+          "outputTokens": 51,
+          "estimatedCostUsd": 0.00058575,
+          "promptChars": 836,
+          "responseChars": 229,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789585702543,
+          "durationMs": 17894.5858,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789585720444,
+          "durationMs": 14739.123300000036,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789585735190,
+          "durationMs": 7644.175300000003,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        }
+      ],
+      "providerStats": {
+        "requests": 5,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 0,
+      "filesModified": null
+    },
+    {
+      "id": "validation-calendar-date",
+      "category": "validation",
+      "difficulty": "easy",
+      "passed": false,
+      "agentStatus": "failed",
+      "elapsedMs": 47422.42870000005,
+      "metrics": {
+        "modelCalls": 5,
+        "toolCalls": 2,
+        "toolErrors": 0,
+        "modelMs": 47072.961699999985,
+        "toolMs": 12.178099999960978,
+        "tokens": 1060,
+        "schemaValidFirstAttempt": 2,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 5,
+      "error": "All providers failed: Invalid or truncated Gemini response",
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585743178,
+          "durationMs": 1548.0699999999488,
+          "inputTokens": 403,
+          "outputTokens": 70,
+          "estimatedCostUsd": 0.00056475,
+          "promptChars": 491,
+          "responseChars": 294,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585744740,
+          "durationMs": 7166.99920000002,
+          "inputTokens": 550,
+          "outputTokens": 37,
+          "estimatedCostUsd": 0.00055125,
+          "promptChars": 865,
+          "responseChars": 159,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789585751924,
+          "durationMs": 17463.913,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789585769394,
+          "durationMs": 13825.796499999997,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789585783227,
+          "durationMs": 7068.183000000019,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        }
+      ],
+      "providerStats": {
+        "requests": 5,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 0,
+      "filesModified": null
+    },
+    {
+      "id": "api-pagination",
+      "category": "api",
+      "difficulty": "easy",
+      "passed": true,
+      "agentStatus": "completed",
+      "elapsedMs": 32183.773999999976,
+      "metrics": {
+        "modelCalls": 6,
+        "toolCalls": 4,
+        "toolErrors": 0,
+        "modelMs": 31765.215499999933,
+        "toolMs": 56.12690000003204,
+        "tokens": 2770,
+        "schemaValidFirstAttempt": 4,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 6,
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585790612,
+          "durationMs": 1092.2834999999614,
+          "inputTokens": 400,
+          "outputTokens": 59,
+          "estimatedCostUsd": 0.00052125,
+          "promptChars": 497,
+          "responseChars": 261,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585791717,
+          "durationMs": 2293.647100000002,
+          "inputTokens": 535,
+          "outputTokens": 41,
+          "estimatedCostUsd": 0.000555,
+          "promptChars": 838,
+          "responseChars": 176,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789585794026,
+          "durationMs": 12220.777899999986,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789585806255,
+          "durationMs": 7383.462999999989,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585813646,
+          "durationMs": 6956.179699999979,
+          "inputTokens": 590,
+          "outputTokens": 192,
+          "estimatedCostUsd": 0.0011625,
+          "promptChars": 1039,
+          "responseChars": 562,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585820632,
+          "durationMs": 1818.8643000000156,
+          "inputTokens": 916,
+          "outputTokens": 37,
+          "estimatedCostUsd": 0.00082575,
+          "promptChars": 1699,
+          "responseChars": 182,
+          "status": "success"
+        }
+      ],
+      "providerStats": {
+        "requests": 6,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 0,
+      "filesModified": 1
+    },
+    {
+      "id": "api-filters",
+      "category": "api",
+      "difficulty": "easy",
+      "passed": true,
+      "agentStatus": "completed",
+      "elapsedMs": 9055.94140000001,
+      "metrics": {
+        "modelCalls": 3,
+        "toolCalls": 3,
+        "toolErrors": 0,
+        "modelMs": 8679.049299999955,
+        "toolMs": 40.11200000002282,
+        "tokens": 2009,
+        "schemaValidFirstAttempt": 3,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 3,
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585822804,
+          "durationMs": 1463.907899999991,
+          "inputTokens": 398,
+          "outputTokens": 55,
+          "estimatedCostUsd": 0.00050475,
+          "promptChars": 496,
+          "responseChars": 244,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585824281,
+          "durationMs": 5724.355700000015,
+          "inputTokens": 544,
+          "outputTokens": 161,
+          "estimatedCostUsd": 0.00101175,
+          "promptChars": 866,
+          "responseChars": 462,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585830026,
+          "durationMs": 1490.7856999999494,
+          "inputTokens": 812,
+          "outputTokens": 39,
+          "estimatedCostUsd": 0.00075525,
+          "promptChars": 1321,
+          "responseChars": 207,
+          "status": "success"
+        }
+      ],
+      "providerStats": {
+        "requests": 3,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 0,
+      "filesModified": 1
+    },
+    {
+      "id": "api-error-status",
+      "category": "api",
+      "difficulty": "easy",
+      "passed": true,
+      "agentStatus": "completed",
+      "elapsedMs": 29635.99800000002,
+      "metrics": {
+        "modelCalls": 5,
+        "toolCalls": 3,
+        "toolErrors": 0,
+        "modelMs": 29219.29719999997,
+        "toolMs": 50.505300000018906,
+        "tokens": 2255,
+        "schemaValidFirstAttempt": 3,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 5,
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585831867,
+          "durationMs": 1510.4769000000088,
+          "inputTokens": 420,
+          "outputTokens": 61,
+          "estimatedCostUsd": 0.00054375,
+          "promptChars": 506,
+          "responseChars": 262,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789585833391,
+          "durationMs": 8396.257699999958,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789585841792,
+          "durationMs": 9938.722999999998,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585851737,
+          "durationMs": 3620.3714000000036,
+          "inputTokens": 592,
+          "outputTokens": 205,
+          "estimatedCostUsd": 0.00121275,
+          "promptChars": 1020,
+          "responseChars": 570,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585855383,
+          "durationMs": 5753.468200000003,
+          "inputTokens": 922,
+          "outputTokens": 55,
+          "estimatedCostUsd": 0.00089775,
+          "promptChars": 1622,
+          "responseChars": 174,
+          "status": "success"
+        }
+      ],
+      "providerStats": {
+        "requests": 5,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 0,
+      "filesModified": 1
+    },
+    {
+      "id": "api-token-expiry",
+      "category": "api",
+      "difficulty": "easy",
+      "passed": false,
+      "agentStatus": "failed",
+      "elapsedMs": 35059.74959999998,
+      "metrics": {
+        "modelCalls": 5,
+        "toolCalls": 2,
+        "toolErrors": 0,
+        "modelMs": 34708.68910000002,
+        "toolMs": 12.070400000025984,
+        "tokens": 1032,
+        "schemaValidFirstAttempt": 2,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 5,
+      "error": "All providers failed: Invalid or truncated Gemini response",
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585861511,
+          "durationMs": 1259.5738999999594,
+          "inputTokens": 404,
+          "outputTokens": 56,
+          "estimatedCostUsd": 0.000513,
+          "promptChars": 525,
+          "responseChars": 266,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585862784,
+          "durationMs": 6191.331900000048,
+          "inputTokens": 523,
+          "outputTokens": 49,
+          "estimatedCostUsd": 0.000576,
+          "promptChars": 852,
+          "responseChars": 218,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789585868990,
+          "durationMs": 14878.161800000002,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789585883875,
+          "durationMs": 6355.09500000003,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789585890238,
+          "durationMs": 6024.526499999978,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        }
+      ],
+      "providerStats": {
+        "requests": 5,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 0,
+      "filesModified": null
+    },
+    {
+      "id": "api-idempotency",
+      "category": "api",
+      "difficulty": "easy",
+      "passed": true,
+      "agentStatus": "completed",
+      "elapsedMs": 8483.659799999965,
+      "metrics": {
+        "modelCalls": 4,
+        "toolCalls": 4,
+        "toolErrors": 0,
+        "modelMs": 8106.299499999965,
+        "toolMs": 51.648800000024494,
+        "tokens": 3123,
+        "schemaValidFirstAttempt": 4,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 4,
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585896577,
+          "durationMs": 1214.0103000000236,
+          "inputTokens": 401,
+          "outputTokens": 55,
+          "estimatedCostUsd": 0.000507,
+          "promptChars": 499,
+          "responseChars": 241,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585897804,
+          "durationMs": 2756.1519999999437,
+          "inputTokens": 564,
+          "outputTokens": 175,
+          "estimatedCostUsd": 0.00107925,
+          "promptChars": 901,
+          "responseChars": 441,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585900581,
+          "durationMs": 2436.1805000000168,
+          "inputTokens": 862,
+          "outputTokens": 42,
+          "estimatedCostUsd": 0.000804,
+          "promptChars": 1372,
+          "responseChars": 160,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585903059,
+          "durationMs": 1699.9566999999806,
+          "inputTokens": 981,
+          "outputTokens": 43,
+          "estimatedCostUsd": 0.000897,
+          "promptChars": 1624,
+          "responseChars": 199,
+          "status": "success"
+        }
+      ],
+      "providerStats": {
+        "requests": 4,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 0,
+      "filesModified": 1
+    },
+    {
+      "id": "data-group-sum",
+      "category": "data",
+      "difficulty": "easy",
+      "passed": true,
+      "agentStatus": "completed",
+      "elapsedMs": 44591.52159999998,
+      "metrics": {
+        "modelCalls": 6,
+        "toolCalls": 4,
+        "toolErrors": 0,
+        "modelMs": 44173.38280000014,
+        "toolMs": 58.94110000017099,
+        "tokens": 2844,
+        "schemaValidFirstAttempt": 4,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 6,
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585905069,
+          "durationMs": 1731.5634999999893,
+          "inputTokens": 401,
+          "outputTokens": 58,
+          "estimatedCostUsd": 0.00051825,
+          "promptChars": 513,
+          "responseChars": 251,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585906814,
+          "durationMs": 4079.206600000034,
+          "inputTokens": 554,
+          "outputTokens": 55,
+          "estimatedCostUsd": 0.00062175,
+          "promptChars": 890,
+          "responseChars": 247,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789585910911,
+          "durationMs": 14534.865900000033,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789585925453,
+          "durationMs": 9415.515300000086,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585934883,
+          "durationMs": 7368.350399999996,
+          "inputTokens": 620,
+          "outputTokens": 186,
+          "estimatedCostUsd": 0.0011625,
+          "promptChars": 1169,
+          "responseChars": 485,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585942281,
+          "durationMs": 7043.881099999999,
+          "inputTokens": 929,
+          "outputTokens": 41,
+          "estimatedCostUsd": 0.0008505,
+          "promptChars": 1683,
+          "responseChars": 206,
+          "status": "success"
+        }
+      ],
+      "providerStats": {
+        "requests": 6,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 0,
+      "filesModified": 1
+    },
+    {
+      "id": "data-null-sort",
+      "category": "data",
+      "difficulty": "easy",
+      "passed": true,
+      "agentStatus": "completed",
+      "elapsedMs": 9181.102100000018,
+      "metrics": {
+        "modelCalls": 3,
+        "toolCalls": 3,
+        "toolErrors": 0,
+        "modelMs": 8813.142699999968,
+        "toolMs": 42.54799999995157,
+        "tokens": 2048,
+        "schemaValidFirstAttempt": 3,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 3,
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585949675,
+          "durationMs": 1367.5738000000129,
+          "inputTokens": 394,
+          "outputTokens": 63,
+          "estimatedCostUsd": 0.00053175,
+          "promptChars": 485,
+          "responseChars": 316,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585951056,
+          "durationMs": 6134.44869999995,
+          "inputTokens": 532,
+          "outputTokens": 188,
+          "estimatedCostUsd": 0.001104,
+          "promptChars": 869,
+          "responseChars": 528,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585957211,
+          "durationMs": 1311.1202000000048,
+          "inputTokens": 837,
+          "outputTokens": 34,
+          "estimatedCostUsd": 0.00075525,
+          "promptChars": 1352,
+          "responseChars": 174,
+          "status": "success"
+        }
+      ],
+      "providerStats": {
+        "requests": 3,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 0,
+      "filesModified": 1
+    },
+    {
+      "id": "data-immutable-update",
+      "category": "data",
+      "difficulty": "easy",
+      "passed": true,
+      "agentStatus": "completed",
+      "elapsedMs": 7130.541499999934,
+      "metrics": {
+        "modelCalls": 3,
+        "toolCalls": 3,
+        "toolErrors": 0,
+        "modelMs": 6754.560500000021,
+        "toolMs": 41.48789999994915,
+        "tokens": 1982,
+        "schemaValidFirstAttempt": 3,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 3,
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585958866,
+          "durationMs": 2223.019100000034,
+          "inputTokens": 396,
+          "outputTokens": 55,
+          "estimatedCostUsd": 0.00050325,
+          "promptChars": 490,
+          "responseChars": 227,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585961102,
+          "durationMs": 3256.4671999999555,
+          "inputTokens": 539,
+          "outputTokens": 151,
+          "estimatedCostUsd": 0.0009705,
+          "promptChars": 830,
+          "responseChars": 390,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585964379,
+          "durationMs": 1275.0742000000319,
+          "inputTokens": 809,
+          "outputTokens": 32,
+          "estimatedCostUsd": 0.00072675,
+          "promptChars": 1253,
+          "responseChars": 159,
+          "status": "success"
+        }
+      ],
+      "providerStats": {
+        "requests": 3,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 0,
+      "filesModified": 1
+    },
+    {
+      "id": "data-left-join",
+      "category": "data",
+      "difficulty": "easy",
+      "passed": true,
+      "agentStatus": "completed",
+      "elapsedMs": 7606.31389999995,
+      "metrics": {
+        "modelCalls": 3,
+        "toolCalls": 3,
+        "toolErrors": 0,
+        "modelMs": 7129.089399999939,
+        "toolMs": 45.90599999995902,
+        "tokens": 2105,
+        "schemaValidFirstAttempt": 3,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 3,
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585966005,
+          "durationMs": 1219.0102000000188,
+          "inputTokens": 403,
+          "outputTokens": 52,
+          "estimatedCostUsd": 0.00049725,
+          "promptChars": 514,
+          "responseChars": 218,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585967236,
+          "durationMs": 4082.7818999999436,
+          "inputTokens": 551,
+          "outputTokens": 193,
+          "estimatedCostUsd": 0.001137,
+          "promptChars": 847,
+          "responseChars": 554,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585971340,
+          "durationMs": 1827.2972999999765,
+          "inputTokens": 870,
+          "outputTokens": 36,
+          "estimatedCostUsd": 0.0007875,
+          "promptChars": 1457,
+          "responseChars": 170,
+          "status": "success"
+        }
+      ],
+      "providerStats": {
+        "requests": 3,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 0,
+      "filesModified": 1
+    },
+    {
+      "id": "data-currency",
+      "category": "data",
+      "difficulty": "easy",
+      "passed": true,
+      "agentStatus": "completed",
+      "elapsedMs": 7639.017700000084,
+      "metrics": {
+        "modelCalls": 3,
+        "toolCalls": 3,
+        "toolErrors": 0,
+        "modelMs": 7243.057799999951,
+        "toolMs": 51.639100000145845,
+        "tokens": 2018,
+        "schemaValidFirstAttempt": 3,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 3,
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585973619,
+          "durationMs": 2101.377899999963,
+          "inputTokens": 400,
+          "outputTokens": 64,
+          "estimatedCostUsd": 0.00054,
+          "promptChars": 513,
+          "responseChars": 309,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585975733,
+          "durationMs": 3174.5668000000296,
+          "inputTokens": 549,
+          "outputTokens": 150,
+          "estimatedCostUsd": 0.00097425,
+          "promptChars": 928,
+          "responseChars": 389,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585978929,
+          "durationMs": 1967.1130999999586,
+          "inputTokens": 814,
+          "outputTokens": 41,
+          "estimatedCostUsd": 0.00076425,
+          "promptChars": 1282,
+          "responseChars": 190,
+          "status": "success"
+        }
+      ],
+      "providerStats": {
+        "requests": 3,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 0,
+      "filesModified": 1
+    },
+    {
+      "id": "async-deduplicate",
+      "category": "async",
+      "difficulty": "medium",
+      "passed": false,
+      "agentStatus": "failed",
+      "elapsedMs": 50898.93400000001,
+      "metrics": {
+        "modelCalls": 6,
+        "toolCalls": 2,
+        "toolErrors": 0,
+        "modelMs": 50523.143299999996,
+        "toolMs": 13.692999999970198,
+        "tokens": 1058,
+        "schemaValidFirstAttempt": 2,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 6,
+      "error": "All providers failed: Invalid or truncated Gemini response",
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585981267,
+          "durationMs": 1221.7870000000112,
+          "inputTokens": 401,
+          "outputTokens": 62,
+          "estimatedCostUsd": 0.00053325,
+          "promptChars": 500,
+          "responseChars": 281,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789585982502,
+          "durationMs": 12481.150900000008,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789585994993,
+          "durationMs": 5519.963199999998,
+          "inputTokens": 546,
+          "outputTokens": 49,
+          "estimatedCostUsd": 0.00059325,
+          "promptChars": 918,
+          "responseChars": 225,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789586000533,
+          "durationMs": 14928.38730000006,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789586015470,
+          "durationMs": 7368.136499999906,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789586022846,
+          "durationMs": 9003.718400000012,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        }
+      ],
+      "providerStats": {
+        "requests": 6,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 0,
+      "filesModified": null
+    },
+    {
+      "id": "async-rejection-cache",
+      "category": "async",
+      "difficulty": "medium",
+      "passed": true,
+      "agentStatus": "completed",
+      "elapsedMs": 27082.281799999997,
+      "metrics": {
+        "modelCalls": 5,
+        "toolCalls": 3,
+        "toolErrors": 0,
+        "modelMs": 26651.489999999874,
+        "toolMs": 54.8412000000244,
+        "tokens": 2277,
+        "schemaValidFirstAttempt": 3,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 5,
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586032178,
+          "durationMs": 1712.1047000000253,
+          "inputTokens": 400,
+          "outputTokens": 55,
+          "estimatedCostUsd": 0.00050625,
+          "promptChars": 499,
+          "responseChars": 243,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789586033903,
+          "durationMs": 7882.525799999945,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789586041792,
+          "durationMs": 7155.154800000018,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586048954,
+          "durationMs": 7768.985599999898,
+          "inputTokens": 595,
+          "outputTokens": 236,
+          "estimatedCostUsd": 0.00133125,
+          "promptChars": 1058,
+          "responseChars": 638,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586056749,
+          "durationMs": 2132.7190999999875,
+          "inputTokens": 958,
+          "outputTokens": 33,
+          "estimatedCostUsd": 0.00084225,
+          "promptChars": 1745,
+          "responseChars": 176,
+          "status": "success"
+        }
+      ],
+      "providerStats": {
+        "requests": 5,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 0,
+      "filesModified": 1
+    },
+    {
+      "id": "async-stale-response",
+      "category": "async",
+      "difficulty": "medium",
+      "passed": true,
+      "agentStatus": "completed",
+      "elapsedMs": 11313.312300000107,
+      "metrics": {
+        "modelCalls": 3,
+        "toolCalls": 3,
+        "toolErrors": 0,
+        "modelMs": 10942.572700000135,
+        "toolMs": 42.85719999996945,
+        "tokens": 2153,
+        "schemaValidFirstAttempt": 3,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 3,
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586059268,
+          "durationMs": 1248.4904000000097,
+          "inputTokens": 401,
+          "outputTokens": 60,
+          "estimatedCostUsd": 0.00052575,
+          "promptChars": 499,
+          "responseChars": 246,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586060530,
+          "durationMs": 4605.159700000077,
+          "inputTokens": 552,
+          "outputTokens": 213,
+          "estimatedCostUsd": 0.00121275,
+          "promptChars": 893,
+          "responseChars": 604,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586065156,
+          "durationMs": 5088.922600000049,
+          "inputTokens": 890,
+          "outputTokens": 37,
+          "estimatedCostUsd": 0.00080625,
+          "promptChars": 1518,
+          "responseChars": 179,
+          "status": "success"
+        }
+      ],
+      "providerStats": {
+        "requests": 3,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 0,
+      "filesModified": 1
+    },
+    {
+      "id": "async-concurrency",
+      "category": "async",
+      "difficulty": "medium",
+      "passed": false,
+      "agentStatus": "failed",
+      "elapsedMs": 29162.187799999956,
+      "metrics": {
+        "modelCalls": 4,
+        "toolCalls": 1,
+        "toolErrors": 0,
+        "modelMs": 28821.970499999938,
+        "toolMs": 5.831100000068545,
+        "tokens": 455,
+        "schemaValidFirstAttempt": 1,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 4,
+      "error": "All providers failed: Invalid or truncated Gemini response",
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586070591,
+          "durationMs": 5899.6393999999855,
+          "inputTokens": 398,
+          "outputTokens": 57,
+          "estimatedCostUsd": 0.00051225,
+          "promptChars": 505,
+          "responseChars": 277,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789586076504,
+          "durationMs": 7068.6578000000445,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789586083579,
+          "durationMs": 6950.91929999995,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789586090537,
+          "durationMs": 8902.753999999957,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        }
+      ],
+      "providerStats": {
+        "requests": 4,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 0,
+      "filesModified": null
+    },
+    {
+      "id": "async-abort",
+      "category": "async",
+      "difficulty": "medium",
+      "passed": true,
+      "agentStatus": "completed",
+      "elapsedMs": 11480.169400000013,
+      "metrics": {
+        "modelCalls": 4,
+        "toolCalls": 4,
+        "toolErrors": 0,
+        "modelMs": 11089.740300000063,
+        "toolMs": 50.984399999841116,
+        "tokens": 2675,
+        "schemaValidFirstAttempt": 4,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 4,
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586099761,
+          "durationMs": 2330.4982999999775,
+          "inputTokens": 401,
+          "outputTokens": 64,
+          "estimatedCostUsd": 0.00054075,
+          "promptChars": 504,
+          "responseChars": 274,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586102104,
+          "durationMs": 3057.75410000002,
+          "inputTokens": 537,
+          "outputTokens": 49,
+          "estimatedCostUsd": 0.0005865,
+          "promptChars": 862,
+          "responseChars": 216,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586105178,
+          "durationMs": 4599.073399999994,
+          "inputTokens": 563,
+          "outputTokens": 168,
+          "estimatedCostUsd": 0.00105225,
+          "promptChars": 932,
+          "responseChars": 458,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586109802,
+          "durationMs": 1102.4145000000717,
+          "inputTokens": 858,
+          "outputTokens": 35,
+          "estimatedCostUsd": 0.00077475,
+          "promptChars": 1436,
+          "responseChars": 166,
+          "status": "success"
+        }
+      ],
+      "providerStats": {
+        "requests": 4,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 0,
+      "filesModified": 1
+    },
+    {
+      "id": "typescript-union",
+      "category": "typescript",
+      "difficulty": "medium",
+      "passed": false,
+      "agentStatus": "completed",
+      "elapsedMs": 8367.425500000012,
+      "metrics": {
+        "modelCalls": 3,
+        "toolCalls": 3,
+        "toolErrors": 0,
+        "modelMs": 5146.217799999984,
+        "toolMs": 27.48789999994915,
+        "tokens": 2077,
+        "schemaValidFirstAttempt": 3,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 3,
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586111249,
+          "durationMs": 1286.9246000000276,
+          "inputTokens": 387,
+          "outputTokens": 62,
+          "estimatedCostUsd": 0.00052275,
+          "promptChars": 460,
+          "responseChars": 278,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586112550,
+          "durationMs": 2242.2077999999747,
+          "inputTokens": 537,
+          "outputTokens": 198,
+          "estimatedCostUsd": 0.00114525,
+          "promptChars": 889,
+          "responseChars": 506,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586114813,
+          "durationMs": 1617.0853999999817,
+          "inputTokens": 852,
+          "outputTokens": 41,
+          "estimatedCostUsd": 0.00079275,
+          "promptChars": 1410,
+          "responseChars": 173,
+          "status": "success"
+        }
+      ],
+      "providerStats": {
+        "requests": 3,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 0,
+      "filesModified": null
+    },
+    {
+      "id": "typescript-generic",
+      "category": "typescript",
+      "difficulty": "medium",
+      "passed": false,
+      "agentStatus": "completed",
+      "elapsedMs": 10064.425700000022,
+      "metrics": {
+        "modelCalls": 4,
+        "toolCalls": 4,
+        "toolErrors": 0,
+        "modelMs": 8628.982200000086,
+        "toolMs": 36.294400000129826,
+        "tokens": 2807,
+        "schemaValidFirstAttempt": 4,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 4,
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586119627,
+          "durationMs": 2958.4977000000654,
+          "inputTokens": 388,
+          "outputTokens": 55,
+          "estimatedCostUsd": 0.00049725,
+          "promptChars": 479,
+          "responseChars": 258,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586122599,
+          "durationMs": 1616.284800000023,
+          "inputTokens": 516,
+          "outputTokens": 149,
+          "estimatedCostUsd": 0.00094575,
+          "promptChars": 853,
+          "responseChars": 457,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586124237,
+          "durationMs": 1312.701999999932,
+          "inputTokens": 784,
+          "outputTokens": 48,
+          "estimatedCostUsd": 0.000768,
+          "promptChars": 1326,
+          "responseChars": 212,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586125573,
+          "durationMs": 2741.4977000000654,
+          "inputTokens": 815,
+          "outputTokens": 52,
+          "estimatedCostUsd": 0.00080625,
+          "promptChars": 1407,
+          "responseChars": 210,
+          "status": "success"
+        }
+      ],
+      "providerStats": {
+        "requests": 4,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 0,
+      "filesModified": null
+    },
+    {
+      "id": "typescript-nullable",
+      "category": "typescript",
+      "difficulty": "medium",
+      "passed": false,
+      "agentStatus": "failed",
+      "elapsedMs": 8367.059100000071,
+      "metrics": {
+        "modelCalls": 3,
+        "toolCalls": 2,
+        "toolErrors": 0,
+        "modelMs": 6973.5304999999935,
+        "toolMs": 17.78599999996368,
+        "tokens": 2104,
+        "schemaValidFirstAttempt": 3,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 3,
+      "error": "Policy denies shell",
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586129701,
+          "durationMs": 3315.8311000000685,
+          "inputTokens": 386,
+          "outputTokens": 58,
+          "estimatedCostUsd": 0.000507,
+          "promptChars": 459,
+          "responseChars": 275,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586133031,
+          "durationMs": 2235.2164999999804,
+          "inputTokens": 536,
+          "outputTokens": 214,
+          "estimatedCostUsd": 0.0012045,
+          "promptChars": 877,
+          "responseChars": 620,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586135288,
+          "durationMs": 1422.4828999999445,
+          "inputTokens": 864,
+          "outputTokens": 46,
+          "estimatedCostUsd": 0.0008205,
+          "promptChars": 1479,
+          "responseChars": 208,
+          "status": "success"
+        }
+      ],
+      "providerStats": {
+        "requests": 3,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 1,
+      "filesModified": null
+    },
+    {
+      "id": "typescript-readonly",
+      "category": "typescript",
+      "difficulty": "medium",
+      "passed": false,
+      "agentStatus": "failed",
+      "elapsedMs": 6733.551199999987,
+      "metrics": {
+        "modelCalls": 3,
+        "toolCalls": 2,
+        "toolErrors": 0,
+        "modelMs": 5354.523399999947,
+        "toolMs": 17.882800000021234,
+        "tokens": 2040,
+        "schemaValidFirstAttempt": 3,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 3,
+      "error": "Policy denies shell",
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586138076,
+          "durationMs": 1288.6441999999806,
+          "inputTokens": 385,
+          "outputTokens": 57,
+          "estimatedCostUsd": 0.0005025,
+          "promptChars": 453,
+          "responseChars": 272,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586139378,
+          "durationMs": 2654.635499999975,
+          "inputTokens": 528,
+          "outputTokens": 183,
+          "estimatedCostUsd": 0.00108225,
+          "promptChars": 862,
+          "responseChars": 536,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586142055,
+          "durationMs": 1411.2436999999918,
+          "inputTokens": 839,
+          "outputTokens": 48,
+          "estimatedCostUsd": 0.00080925,
+          "promptChars": 1386,
+          "responseChars": 207,
+          "status": "success"
+        }
+      ],
+      "providerStats": {
+        "requests": 3,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 1,
+      "filesModified": null
+    },
+    {
+      "id": "typescript-overload",
+      "category": "typescript",
+      "difficulty": "medium",
+      "passed": false,
+      "agentStatus": "completed",
+      "elapsedMs": 14210.053700000048,
+      "metrics": {
+        "modelCalls": 4,
+        "toolCalls": 4,
+        "toolErrors": 0,
+        "modelMs": 12865.345499999821,
+        "toolMs": 36.017500000074506,
+        "tokens": 2694,
+        "schemaValidFirstAttempt": 4,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 4,
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586144819,
+          "durationMs": 1197.5804999999236,
+          "inputTokens": 387,
+          "outputTokens": 56,
+          "estimatedCostUsd": 0.00050025,
+          "promptChars": 477,
+          "responseChars": 252,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586146031,
+          "durationMs": 3780.440100000007,
+          "inputTokens": 532,
+          "outputTokens": 55,
+          "estimatedCostUsd": 0.00060525,
+          "promptChars": 906,
+          "responseChars": 238,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586149827,
+          "durationMs": 4006.20829999994,
+          "inputTokens": 572,
+          "outputTokens": 171,
+          "estimatedCostUsd": 0.00107025,
+          "promptChars": 1051,
+          "responseChars": 564,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586153860,
+          "durationMs": 3881.1165999999503,
+          "inputTokens": 871,
+          "outputTokens": 50,
+          "estimatedCostUsd": 0.00084075,
+          "promptChars": 1638,
+          "responseChars": 226,
+          "status": "success"
+        }
+      ],
+      "providerStats": {
+        "requests": 4,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 0,
+      "filesModified": null
+    },
+    {
+      "id": "ui-state-functional-update",
+      "category": "ui-state",
+      "difficulty": "easy",
+      "passed": true,
+      "agentStatus": "completed",
+      "elapsedMs": 6672.871200000052,
+      "metrics": {
+        "modelCalls": 3,
+        "toolCalls": 3,
+        "toolErrors": 0,
+        "modelMs": 6305.127699999954,
+        "toolMs": 55.426000000094064,
+        "tokens": 1955,
+        "schemaValidFirstAttempt": 3,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 3,
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586159039,
+          "durationMs": 1217.0675000000047,
+          "inputTokens": 396,
+          "outputTokens": 57,
+          "estimatedCostUsd": 0.00051075,
+          "promptChars": 487,
+          "responseChars": 253,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586160270,
+          "durationMs": 2189.909999999916,
+          "inputTokens": 533,
+          "outputTokens": 140,
+          "estimatedCostUsd": 0.00092475,
+          "promptChars": 856,
+          "responseChars": 390,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586162481,
+          "durationMs": 2898.150200000033,
+          "inputTokens": 799,
+          "outputTokens": 30,
+          "estimatedCostUsd": 0.00071175,
+          "promptChars": 1278,
+          "responseChars": 149,
+          "status": "success"
+        }
+      ],
+      "providerStats": {
+        "requests": 3,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 0,
+      "filesModified": 1
+    },
+    {
+      "id": "ui-state-remove-item",
+      "category": "ui-state",
+      "difficulty": "easy",
+      "passed": true,
+      "agentStatus": "completed",
+      "elapsedMs": 7675.50820000004,
+      "metrics": {
+        "modelCalls": 3,
+        "toolCalls": 3,
+        "toolErrors": 0,
+        "modelMs": 7314.357900000061,
+        "toolMs": 33.36960000009276,
+        "tokens": 1990,
+        "schemaValidFirstAttempt": 3,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 3,
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586165719,
+          "durationMs": 1811.469999999972,
+          "inputTokens": 394,
+          "outputTokens": 71,
+          "estimatedCostUsd": 0.00056175,
+          "promptChars": 470,
+          "responseChars": 315,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586167544,
+          "durationMs": 2962.263200000045,
+          "inputTokens": 544,
+          "outputTokens": 143,
+          "estimatedCostUsd": 0.00094425,
+          "promptChars": 912,
+          "responseChars": 422,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586170528,
+          "durationMs": 2540.624700000044,
+          "inputTokens": 800,
+          "outputTokens": 38,
+          "estimatedCostUsd": 0.0007425,
+          "promptChars": 1309,
+          "responseChars": 188,
+          "status": "success"
+        }
+      ],
+      "providerStats": {
+        "requests": 3,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 0,
+      "filesModified": 1
+    },
+    {
+      "id": "ui-state-selection",
+      "category": "ui-state",
+      "difficulty": "easy",
+      "passed": false,
+      "agentStatus": "failed",
+      "elapsedMs": 56004.49300000002,
+      "metrics": {
+        "modelCalls": 5,
+        "toolCalls": 2,
+        "toolErrors": 0,
+        "modelMs": 55514.09319999989,
+        "toolMs": 34.50929999991786,
+        "tokens": 1013,
+        "schemaValidFirstAttempt": 2,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 5,
+      "error": "All providers failed: Invalid or truncated Gemini response",
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586173406,
+          "durationMs": 2713.732299999916,
+          "inputTokens": 396,
+          "outputTokens": 53,
+          "estimatedCostUsd": 0.00049575,
+          "promptChars": 488,
+          "responseChars": 251,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586176155,
+          "durationMs": 2297.9071999998996,
+          "inputTokens": 518,
+          "outputTokens": 46,
+          "estimatedCostUsd": 0.000561,
+          "promptChars": 826,
+          "responseChars": 213,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789586178470,
+          "durationMs": 14279.860800000024,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789586192757,
+          "durationMs": 14504.847300000023,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789586207269,
+          "durationMs": 21717.745600000024,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        }
+      ],
+      "providerStats": {
+        "requests": 5,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 0,
+      "filesModified": null
+    },
+    {
+      "id": "ui-state-unsubscribe",
+      "category": "ui-state",
+      "difficulty": "easy",
+      "passed": true,
+      "agentStatus": "completed",
+      "elapsedMs": 22047.326899999985,
+      "metrics": {
+        "modelCalls": 5,
+        "toolCalls": 4,
+        "toolErrors": 0,
+        "modelMs": 21605.30799999996,
+        "toolMs": 50.60590000008233,
+        "tokens": 2787,
+        "schemaValidFirstAttempt": 4,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 5,
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586229420,
+          "durationMs": 1897.924800000037,
+          "inputTokens": 401,
+          "outputTokens": 56,
+          "estimatedCostUsd": 0.00051075,
+          "promptChars": 515,
+          "responseChars": 259,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586231331,
+          "durationMs": 4086.4198000000324,
+          "inputTokens": 540,
+          "outputTokens": 50,
+          "estimatedCostUsd": 0.0005925,
+          "promptChars": 905,
+          "responseChars": 214,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789586235434,
+          "durationMs": 6723.493200000026,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586242164,
+          "durationMs": 4381.689199999906,
+          "inputTokens": 585,
+          "outputTokens": 198,
+          "estimatedCostUsd": 0.00118125,
+          "promptChars": 1069,
+          "responseChars": 612,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586246572,
+          "durationMs": 4515.780999999959,
+          "inputTokens": 915,
+          "outputTokens": 42,
+          "estimatedCostUsd": 0.00084375,
+          "promptChars": 1743,
+          "responseChars": 197,
+          "status": "success"
+        }
+      ],
+      "providerStats": {
+        "requests": 5,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 0,
+      "filesModified": 1
+    },
+    {
+      "id": "ui-state-derived-filter",
+      "category": "ui-state",
+      "difficulty": "easy",
+      "passed": true,
+      "agentStatus": "completed",
+      "elapsedMs": 12564.894099999918,
+      "metrics": {
+        "modelCalls": 4,
+        "toolCalls": 4,
+        "toolErrors": 0,
+        "modelMs": 12130.300300000003,
+        "toolMs": 50.201799999922514,
+        "tokens": 3068,
+        "schemaValidFirstAttempt": 4,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 4,
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586251478,
+          "durationMs": 1203.0256999999983,
+          "inputTokens": 402,
+          "outputTokens": 57,
+          "estimatedCostUsd": 0.00051525,
+          "promptChars": 509,
+          "responseChars": 267,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586252695,
+          "durationMs": 6684.083199999994,
+          "inputTokens": 545,
+          "outputTokens": 173,
+          "estimatedCostUsd": 0.0010575,
+          "promptChars": 896,
+          "responseChars": 527,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586259403,
+          "durationMs": 2229.9473,
+          "inputTokens": 845,
+          "outputTokens": 37,
+          "estimatedCostUsd": 0.0007725,
+          "promptChars": 1433,
+          "responseChars": 150,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586261671,
+          "durationMs": 2013.2441000000108,
+          "inputTokens": 975,
+          "outputTokens": 34,
+          "estimatedCostUsd": 0.00085875,
+          "promptChars": 1678,
+          "responseChars": 168,
+          "status": "success"
+        }
+      ],
+      "providerStats": {
+        "requests": 4,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 0,
+      "filesModified": 1
+    },
+    {
+      "id": "cross-file-result-contract",
+      "category": "cross-file",
+      "difficulty": "medium",
+      "passed": true,
+      "agentStatus": "completed",
+      "elapsedMs": 8320.03039999993,
+      "metrics": {
+        "modelCalls": 4,
+        "toolCalls": 4,
+        "toolErrors": 0,
+        "modelMs": 7920.936300000176,
+        "toolMs": 53.6486000000732,
+        "tokens": 2788,
+        "schemaValidFirstAttempt": 4,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 4,
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586264055,
+          "durationMs": 1570.5995000000112,
+          "inputTokens": 401,
+          "outputTokens": 43,
+          "estimatedCostUsd": 0.000462,
+          "promptChars": 504,
+          "responseChars": 175,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586265637,
+          "durationMs": 1525.579400000046,
+          "inputTokens": 532,
+          "outputTokens": 59,
+          "estimatedCostUsd": 0.00062025,
+          "promptChars": 818,
+          "responseChars": 259,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586267179,
+          "durationMs": 2591.9898000000976,
+          "inputTokens": 654,
+          "outputTokens": 139,
+          "estimatedCostUsd": 0.00101175,
+          "promptChars": 1097,
+          "responseChars": 342,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586269796,
+          "durationMs": 2232.767600000021,
+          "inputTokens": 924,
+          "outputTokens": 36,
+          "estimatedCostUsd": 0.000828,
+          "promptChars": 1481,
+          "responseChars": 171,
+          "status": "success"
+        }
+      ],
+      "providerStats": {
+        "requests": 4,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 0,
+      "filesModified": 2
+    },
+    {
+      "id": "cross-file-config-default",
+      "category": "cross-file",
+      "difficulty": "medium",
+      "passed": true,
+      "agentStatus": "completed",
+      "elapsedMs": 35889.06530000002,
+      "metrics": {
+        "modelCalls": 7,
+        "toolCalls": 5,
+        "toolErrors": 0,
+        "modelMs": 35421.25339999993,
+        "toolMs": 70.91899999999441,
+        "tokens": 3607,
+        "schemaValidFirstAttempt": 5,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 7,
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586272385,
+          "durationMs": 1741.1834999999264,
+          "inputTokens": 399,
+          "outputTokens": 61,
+          "estimatedCostUsd": 0.000528,
+          "promptChars": 502,
+          "responseChars": 278,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586274138,
+          "durationMs": 1933.5040000000736,
+          "inputTokens": 541,
+          "outputTokens": 59,
+          "estimatedCostUsd": 0.000627,
+          "promptChars": 896,
+          "responseChars": 254,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586276090,
+          "durationMs": 3158.738000000012,
+          "inputTokens": 643,
+          "outputTokens": 39,
+          "estimatedCostUsd": 0.0006285,
+          "promptChars": 1099,
+          "responseChars": 166,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789586279269,
+          "durationMs": 11860.77919999999,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789586291138,
+          "durationMs": 7374.82349999994,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586298522,
+          "durationMs": 6227.729999999981,
+          "inputTokens": 695,
+          "outputTokens": 149,
+          "estimatedCostUsd": 0.00108,
+          "promptChars": 1305,
+          "responseChars": 430,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586304784,
+          "durationMs": 3124.495200000005,
+          "inputTokens": 984,
+          "outputTokens": 37,
+          "estimatedCostUsd": 0.00087675,
+          "promptChars": 1824,
+          "responseChars": 178,
+          "status": "success"
+        }
+      ],
+      "providerStats": {
+        "requests": 7,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 0,
+      "filesModified": 2
+    },
+    {
+      "id": "cross-file-validator",
+      "category": "cross-file",
+      "difficulty": "medium",
+      "passed": true,
+      "agentStatus": "completed",
+      "elapsedMs": 10552.7625999999,
+      "metrics": {
+        "modelCalls": 5,
+        "toolCalls": 5,
+        "toolErrors": 0,
+        "modelMs": 10107.782999999938,
+        "toolMs": 73.57419999991544,
+        "tokens": 3460,
+        "schemaValidFirstAttempt": 5,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 5,
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586308282,
+          "durationMs": 3325.221099999966,
+          "inputTokens": 400,
+          "outputTokens": 57,
+          "estimatedCostUsd": 0.00051375,
+          "promptChars": 507,
+          "responseChars": 245,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586311621,
+          "durationMs": 1216.5714999999618,
+          "inputTokens": 464,
+          "outputTokens": 54,
+          "estimatedCostUsd": 0.0005505,
+          "promptChars": 765,
+          "responseChars": 232,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586312856,
+          "durationMs": 1004.5063000000082,
+          "inputTokens": 561,
+          "outputTokens": 53,
+          "estimatedCostUsd": 0.0006195,
+          "promptChars": 959,
+          "responseChars": 245,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586313881,
+          "durationMs": 3052.9318000000203,
+          "inputTokens": 685,
+          "outputTokens": 167,
+          "estimatedCostUsd": 0.00114,
+          "promptChars": 1226,
+          "responseChars": 483,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586316964,
+          "durationMs": 1508.5522999999812,
+          "inputTokens": 985,
+          "outputTokens": 34,
+          "estimatedCostUsd": 0.00086625,
+          "promptChars": 1780,
+          "responseChars": 171,
+          "status": "success"
+        }
+      ],
+      "providerStats": {
+        "requests": 5,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 0,
+      "filesModified": 2
+    },
+    {
+      "id": "cross-file-shared-error",
+      "category": "cross-file",
+      "difficulty": "medium",
+      "passed": false,
+      "agentStatus": "completed",
+      "elapsedMs": 11627.488999999943,
+      "metrics": {
+        "modelCalls": 3,
+        "toolCalls": 3,
+        "toolErrors": 0,
+        "modelMs": 11267.484700000146,
+        "toolMs": 44.49320000002626,
+        "tokens": 2120,
+        "schemaValidFirstAttempt": 3,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 3,
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586318844,
+          "durationMs": 2941.121400000062,
+          "inputTokens": 398,
+          "outputTokens": 56,
+          "estimatedCostUsd": 0.0005085,
+          "promptChars": 501,
+          "responseChars": 259,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586321799,
+          "durationMs": 4759.610400000005,
+          "inputTokens": 544,
+          "outputTokens": 216,
+          "estimatedCostUsd": 0.001218,
+          "promptChars": 896,
+          "responseChars": 646,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586326580,
+          "durationMs": 3566.7529000000795,
+          "inputTokens": 870,
+          "outputTokens": 36,
+          "estimatedCostUsd": 0.0007875,
+          "promptChars": 1558,
+          "responseChars": 179,
+          "status": "success"
+        }
+      ],
+      "providerStats": {
+        "requests": 3,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 0,
+      "filesModified": null
+    },
+    {
+      "id": "cross-file-dependency-injection",
+      "category": "cross-file",
+      "difficulty": "medium",
+      "passed": true,
+      "agentStatus": "completed",
+      "elapsedMs": 19247.77620000008,
+      "metrics": {
+        "modelCalls": 6,
+        "toolCalls": 6,
+        "toolErrors": 0,
+        "modelMs": 18760.465600000112,
+        "toolMs": 85.58340000000317,
+        "tokens": 4681,
+        "schemaValidFirstAttempt": 6,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 6,
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586330481,
+          "durationMs": 2934.9314000000013,
+          "inputTokens": 398,
+          "outputTokens": 70,
+          "estimatedCostUsd": 0.000561,
+          "promptChars": 497,
+          "responseChars": 307,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586333429,
+          "durationMs": 3752.56959999993,
+          "inputTokens": 544,
+          "outputTokens": 53,
+          "estimatedCostUsd": 0.00060675,
+          "promptChars": 905,
+          "responseChars": 233,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586337199,
+          "durationMs": 1544.7425000000512,
+          "inputTokens": 576,
+          "outputTokens": 55,
+          "estimatedCostUsd": 0.00063825,
+          "promptChars": 1000,
+          "responseChars": 235,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586338767,
+          "durationMs": 5256.327600000077,
+          "inputTokens": 686,
+          "outputTokens": 152,
+          "estimatedCostUsd": 0.0010845,
+          "promptChars": 1212,
+          "responseChars": 446,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586344053,
+          "durationMs": 2806.854900000035,
+          "inputTokens": 971,
+          "outputTokens": 42,
+          "estimatedCostUsd": 0.00088575,
+          "promptChars": 1721,
+          "responseChars": 172,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586346918,
+          "durationMs": 2465.0396000000183,
+          "inputTokens": 1101,
+          "outputTokens": 33,
+          "estimatedCostUsd": 0.0009495,
+          "promptChars": 2019,
+          "responseChars": 153,
+          "status": "success"
+        }
+      ],
+      "providerStats": {
+        "requests": 6,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 0,
+      "filesModified": 2
+    },
+    {
+      "id": "features-ttl-cache",
+      "category": "features",
+      "difficulty": "easy",
+      "passed": true,
+      "agentStatus": "completed",
+      "elapsedMs": 14753.400199999916,
+      "metrics": {
+        "modelCalls": 4,
+        "toolCalls": 4,
+        "toolErrors": 0,
+        "modelMs": 14349.414300000179,
+        "toolMs": 56.337599999969825,
+        "tokens": 2962,
+        "schemaValidFirstAttempt": 4,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 4,
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586349738,
+          "durationMs": 1291.7331000000704,
+          "inputTokens": 409,
+          "outputTokens": 42,
+          "estimatedCostUsd": 0.00046425,
+          "promptChars": 516,
+          "responseChars": 174,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586351042,
+          "durationMs": 3400.7415999999503,
+          "inputTokens": 552,
+          "outputTokens": 41,
+          "estimatedCostUsd": 0.00056775,
+          "promptChars": 860,
+          "responseChars": 169,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586354459,
+          "durationMs": 5573.859600000083,
+          "inputTokens": 588,
+          "outputTokens": 279,
+          "estimatedCostUsd": 0.00148725,
+          "promptChars": 977,
+          "responseChars": 831,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586360057,
+          "durationMs": 4083.0800000000745,
+          "inputTokens": 1005,
+          "outputTokens": 46,
+          "estimatedCostUsd": 0.00092625,
+          "promptChars": 1913,
+          "responseChars": 183,
+          "status": "success"
+        }
+      ],
+      "providerStats": {
+        "requests": 4,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 0,
+      "filesModified": 1
+    },
+    {
+      "id": "features-retry-budget",
+      "category": "features",
+      "difficulty": "easy",
+      "passed": true,
+      "agentStatus": "completed",
+      "elapsedMs": 11866.48490000004,
+      "metrics": {
+        "modelCalls": 3,
+        "toolCalls": 3,
+        "toolErrors": 0,
+        "modelMs": 11487.150600000052,
+        "toolMs": 43.339599999948405,
+        "tokens": 2077,
+        "schemaValidFirstAttempt": 3,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 3,
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586364501,
+          "durationMs": 3427.033700000029,
+          "inputTokens": 404,
+          "outputTokens": 64,
+          "estimatedCostUsd": 0.000543,
+          "promptChars": 507,
+          "responseChars": 274,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586367941,
+          "durationMs": 5825.113899999997,
+          "inputTokens": 537,
+          "outputTokens": 189,
+          "estimatedCostUsd": 0.0011115,
+          "promptChars": 860,
+          "responseChars": 524,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586373788,
+          "durationMs": 2235.003000000026,
+          "inputTokens": 838,
+          "outputTokens": 45,
+          "estimatedCostUsd": 0.00079725,
+          "promptChars": 1414,
+          "responseChars": 206,
+          "status": "success"
+        }
+      ],
+      "providerStats": {
+        "requests": 3,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 0,
+      "filesModified": 1
+    },
+    {
+      "id": "features-once-event",
+      "category": "features",
+      "difficulty": "easy",
+      "passed": true,
+      "agentStatus": "completed",
+      "elapsedMs": 37210.88760000002,
+      "metrics": {
+        "modelCalls": 5,
+        "toolCalls": 4,
+        "toolErrors": 0,
+        "modelMs": 36775.891399999964,
+        "toolMs": 57.938700000057,
+        "tokens": 2838,
+        "schemaValidFirstAttempt": 4,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 5,
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586376379,
+          "durationMs": 1072.1792000000132,
+          "inputTokens": 402,
+          "outputTokens": 57,
+          "estimatedCostUsd": 0.00051525,
+          "promptChars": 493,
+          "responseChars": 241,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586377463,
+          "durationMs": 10128.681499999948,
+          "inputTokens": 536,
+          "outputTokens": 39,
+          "estimatedCostUsd": 0.00054825,
+          "promptChars": 812,
+          "responseChars": 162,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789586387608,
+          "durationMs": 17001.10190000001,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586404617,
+          "durationMs": 6533.886100000003,
+          "inputTokens": 571,
+          "outputTokens": 237,
+          "estimatedCostUsd": 0.001317,
+          "promptChars": 946,
+          "responseChars": 744,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586411179,
+          "durationMs": 2040.0426999999909,
+          "inputTokens": 946,
+          "outputTokens": 50,
+          "estimatedCostUsd": 0.000897,
+          "promptChars": 1785,
+          "responseChars": 233,
+          "status": "success"
+        }
+      ],
+      "providerStats": {
+        "requests": 5,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 0,
+      "filesModified": 1
+    },
+    {
+      "id": "features-options-compat",
+      "category": "features",
+      "difficulty": "easy",
+      "passed": false,
+      "agentStatus": "failed",
+      "elapsedMs": 38443.60829999996,
+      "metrics": {
+        "modelCalls": 5,
+        "toolCalls": 2,
+        "toolErrors": 0,
+        "modelMs": 37849.98329999996,
+        "toolMs": 51.190000000060536,
+        "tokens": 1056,
+        "schemaValidFirstAttempt": 2,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 5,
+      "error": "All providers failed: Invalid or truncated Gemini response",
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586413595,
+          "durationMs": 2725.3939000000246,
+          "inputTokens": 401,
+          "outputTokens": 73,
+          "estimatedCostUsd": 0.0005745,
+          "promptChars": 521,
+          "responseChars": 341,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586416403,
+          "durationMs": 7847.016999999993,
+          "inputTokens": 541,
+          "outputTokens": 41,
+          "estimatedCostUsd": 0.0005595,
+          "promptChars": 947,
+          "responseChars": 177,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789586424342,
+          "durationMs": 6686.007500000065,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789586431082,
+          "durationMs": 13806.43319999997,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789586444948,
+          "durationMs": 6785.131699999911,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        }
+      ],
+      "providerStats": {
+        "requests": 5,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 0,
+      "filesModified": null
+    },
+    {
+      "id": "features-pure-parser",
+      "category": "features",
+      "difficulty": "easy",
+      "passed": false,
+      "agentStatus": "failed",
+      "elapsedMs": 33504.23190000001,
+      "metrics": {
+        "modelCalls": 4,
+        "toolCalls": 1,
+        "toolErrors": 0,
+        "modelMs": 33107.26829999965,
+        "toolMs": 6.10730000003241,
+        "tokens": 470,
+        "schemaValidFirstAttempt": 1,
+        "schemaRepairs": 0,
+        "schemaFailures": 0
+      },
+      "steps": 4,
+      "error": "All providers failed: Invalid or truncated Gemini response",
+      "modelHistory": [
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini-3.8-flash",
+          "startedAt": 1789586452043,
+          "durationMs": 1383.3255999998655,
+          "inputTokens": 407,
+          "outputTokens": 63,
+          "estimatedCostUsd": 0.0005415,
+          "promptChars": 529,
+          "responseChars": 303,
+          "status": "success"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789586453440,
+          "durationMs": 10132.542099999962,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789586463578,
+          "durationMs": 7334.823799999896,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        },
+        {
+          "provider": "gemini:gemini-3.8-flash",
+          "model": "gemini:gemini-3.8-flash",
+          "startedAt": 1789586470920,
+          "durationMs": 14256.576799999923,
+          "inputTokens": null,
+          "outputTokens": null,
+          "estimatedCostUsd": null,
+          "status": "error",
+          "error": "Invalid or truncated Gemini response"
+        }
+      ],
+      "providerStats": {
+        "requests": 4,
+        "retries": 0,
+        "rateLimited": 0,
+        "serverErrors": 0,
+        "persistentFailures": 0
+      },
+      "permissionDenials": 0,
+      "filesModified": null
+    }
+  ]
+}

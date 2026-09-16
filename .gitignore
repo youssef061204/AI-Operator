@@ -46,5 +46,4 @@ artifacts/verification/*
 .operator/
 .next-e2e/
 artifacts/evaluation/live-runs/
-artifacts/evaluation/live-benchmark.json
 historical/desktop-viewer/release/
