@@ -298,24 +298,56 @@ export class GeminiProvider implements Provider {
       instruction:
         "Return exactly one JSON decision matching the requested action or finish shape. Do not include markdown or prose outside JSON.",
     });
-    const response = await fetch(
-      `${this.endpoint.replace(/\/$/u, "")}/models/${encodeURIComponent(this.model)}:generateContent?key=${encodeURIComponent(this.apiKey)}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        signal: AbortSignal.any([signal, AbortSignal.timeout(timeoutMs)]),
-        redirect: "error",
-        body: JSON.stringify({
-          systemInstruction: { parts: [{ text: system }] },
-          contents: [{ role: "user", parts: [{ text: prompt }] }],
-          generationConfig: {
-            temperature: 0,
-            maxOutputTokens,
-            responseMimeType: "application/json",
+    const request = async (): Promise<Response> =>
+      await fetch(
+        `${this.endpoint.replace(/\/$/u, "")}/models/${encodeURIComponent(this.model)}:generateContent?key=${encodeURIComponent(this.apiKey)}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          signal: AbortSignal.any([signal, AbortSignal.timeout(timeoutMs)]),
+          redirect: "error",
+          body: JSON.stringify({
+            systemInstruction: { parts: [{ text: system }] },
+            contents: [{ role: "user", parts: [{ text: prompt }] }],
+            generationConfig: {
+              temperature: 0,
+              maxOutputTokens,
+              responseMimeType: "application/json",
+            },
+          }),
+        },
+      );
+    let response = await request();
+    for (let retry = 0; !response.ok && retry < 2; retry += 1) {
+      if (response.status !== 429 && response.status !== 503) break;
+      const detail = await response.clone().text();
+      const retryAfterValue = response.headers.get("retry-after");
+      const retryAfterHeader = retryAfterValue
+        ? Number(retryAfterValue)
+        : Number.NaN;
+      const retryMatch = detail.match(/retry in\s+([0-9.]+)\s*(ms|s)/iu);
+      const retryAfterMessage = retryMatch
+        ? Number(retryMatch[1]) *
+          (retryMatch[2]?.toLowerCase() === "ms" ? 0.001 : 1)
+        : Number.NaN;
+      const delaySeconds = Number.isFinite(retryAfterHeader)
+        ? retryAfterHeader
+        : Number.isFinite(retryAfterMessage)
+          ? retryAfterMessage + 0.25
+          : 2 ** retry;
+      await new Promise<void>((resolve, reject) => {
+        const timer = setTimeout(resolve, Math.min(60000, delaySeconds * 1000));
+        signal.addEventListener(
+          "abort",
+          () => {
+            clearTimeout(timer);
+            reject(signal.reason ?? new Error("Gemini request aborted"));
           },
-        }),
-      },
-    );
+          { once: true },
+        );
+      });
+      response = await request();
+    }
     if (!response.ok) {
       const detail = (await response.text())
         .slice(0, 500)
